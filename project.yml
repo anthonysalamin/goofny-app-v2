@@ -1,0 +1,32 @@
+name: Goofny
+options:
+  bundleIdPrefix: com.goofny
+  deploymentTarget:
+    iOS: "17.0"
+packages:
+  Supabase:
+    url: https://github.com/supabase/supabase-swift
+    from: 2.0.0
+targets:
+  Goofny:
+    type: application
+    platform: iOS
+    sources: [Goofny]
+    dependencies:
+      - package: Supabase
+        product: Supabase
+    info:
+      path: Goofny/Info.plist
+      properties:
+        CFBundleDisplayName: Goofny
+        UILaunchScreen: {}
+        NSPhotoLibraryUsageDescription: Goofny needs access to your photos so you can pick an avatar for your pet.
+        NSCameraUsageDescription: Goofny needs camera access so you can take a photo of your pet.
+        CFBundleURLTypes:
+          - CFBundleURLSchemes: [goofny]
+    settings:
+      base:
+        PRODUCT_BUNDLE_IDENTIFIER: com.goofny.app
+        SWIFT_VERSION: "5.9"
+        TARGETED_DEVICE_FAMILY: "1"
+        INFOPLIST_KEY_UIUserInterfaceStyle: Light

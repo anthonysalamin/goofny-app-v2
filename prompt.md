@@ -180,7 +180,7 @@ Display:
 
 ## Backend
 
-- Supabase
+- Supabase (Singapore region)
 
 ## Database
 
