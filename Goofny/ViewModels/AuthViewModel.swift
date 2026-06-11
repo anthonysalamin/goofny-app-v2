@@ -86,6 +86,14 @@ final class AuthViewModel: ObservableObject {
         await run { try await self.service.signOut() }
     }
 
+    func deleteAccount() async {
+        await run {
+            try await self.service.deleteAccount()
+            self.state = .signedOut
+            self.profile = nil
+        }
+    }
+
     func updateDisplayName(_ name: String) async {
         guard let id = service.currentUserID else { return }
         await run {

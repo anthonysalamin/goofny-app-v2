@@ -5,6 +5,7 @@ struct SettingsView: View {
     @Environment(\.dismiss) private var dismiss
     @State private var displayName = ""
     @State private var showSignOutConfirm = false
+    @State private var showDeleteAccountConfirm = false
 
     var body: some View {
         NavigationStack {
@@ -22,14 +23,22 @@ struct SettingsView: View {
 
                 Section("About") {
                     LabeledContent("Version", value: "2.0.0")
-                    Link("Terms of Service", destination: URL(string: "https://goofny.com/terms")!)
-                    Link("Privacy Policy", destination: URL(string: "https://goofny.com/privacy")!)
+                    Link("Terms of Service", destination: URL(string: "https://goofny.com/terms-of-service")!)
+                    Link("Privacy Policy", destination: URL(string: "https://goofny.com/privacy-policy")!)
                 }
 
                 Section {
                     Button("Sign Out", role: .destructive) {
                         showSignOutConfirm = true
                     }
+                }
+
+                Section {
+                    Button("Delete Account", role: .destructive) {
+                        showDeleteAccountConfirm = true
+                    }
+                } footer: {
+                    Text("Permanently deletes your account, your pets, votes, and all associated data. This cannot be undone.")
                 }
             }
             .navigationTitle("Settings")
@@ -45,6 +54,15 @@ struct SettingsView: View {
                     Task { await auth.signOut() }
                 }
             }
+            .alert("Delete your account?", isPresented: $showDeleteAccountConfirm) {
+                Button("Delete Everything", role: .destructive) {
+                    Task { await auth.deleteAccount() }
+                }
+                Button("Cancel", role: .cancel) {}
+            } message: {
+                Text("Your account, pets, votes, and photos will be permanently deleted. This cannot be undone.")
+            }
+            .toast(message: $auth.errorMessage)
         }
     }
 }

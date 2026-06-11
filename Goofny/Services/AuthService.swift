@@ -49,6 +49,18 @@ struct AuthService {
         try await client.auth.signOut()
     }
 
+    /// Permanently deletes the account and all associated data.
+    /// Avatar files are removed via the Storage API first (SQL can't touch storage),
+    /// then the `delete_account` RPC removes the user — everything else cascades.
+    func deleteAccount() async throws {
+        if let uid = currentUserID {
+            try? await StorageService().deleteAllAvatars(userID: uid)
+        }
+        try await client.rpc("delete_account").execute()
+        // The server-side user is gone; clear the local session.
+        try? await client.auth.signOut(scope: .local)
+    }
+
     // MARK: Profile
 
     func fetchProfile(userID: UUID) async throws -> Profile {

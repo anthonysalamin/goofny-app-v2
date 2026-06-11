@@ -18,4 +18,17 @@ struct StorageService {
             .getPublicURL(path: path)
         return url.absoluteString
     }
+
+    /// Deletes every avatar file the user has uploaded (used on account deletion).
+    func deleteAllAvatars(userID: UUID) async throws {
+        let folder = userID.uuidString.lowercased()
+        let files = try await client.storage
+            .from(AppConfig.avatarBucket)
+            .list(path: folder)
+        guard !files.isEmpty else { return }
+        let paths = files.map { "\(folder)/\($0.name)" }
+        try await client.storage
+            .from(AppConfig.avatarBucket)
+            .remove(paths: paths)
+    }
 }
