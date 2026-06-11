@@ -30,3 +30,10 @@ targets:
         SWIFT_VERSION: "5.9"
         TARGETED_DEVICE_FAMILY: "1"
         INFOPLIST_KEY_UIUserInterfaceStyle: Light
+        ASSETCATALOG_COMPILER_APPICON_NAME: AppIcon
+        # Code signing for running on a physical device.
+        # Find your Team ID: Xcode > Settings > Apple Accounts > Personal Team,
+        # or after selecting the team once in Signing & Capabilities, check
+        # Build Settings > DEVELOPMENT_TEAM. It looks like "AB12CD34EF".
+        CODE_SIGN_STYLE: Automatic
+        DEVELOPMENT_TEAM: 4828GZST49
