@@ -92,8 +92,23 @@ struct PetService {
             .value
     }
 
-    func addVaccination(_ payload: VaccinationPayload) async throws {
-        try await client.from("vaccinations").insert(payload).execute()
+    @discardableResult
+    func addVaccination(_ payload: VaccinationPayload) async throws -> Vaccination {
+        try await client
+            .from("vaccinations")
+            .insert(payload)
+            .select()
+            .single()
+            .execute()
+            .value
+    }
+
+    func updateVaccination(id: UUID, payload: VaccinationPayload) async throws {
+        try await client
+            .from("vaccinations")
+            .update(payload)
+            .eq("id", value: id)
+            .execute()
     }
 
     func deleteVaccination(id: UUID) async throws {

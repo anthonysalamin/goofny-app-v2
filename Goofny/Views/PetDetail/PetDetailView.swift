@@ -2,6 +2,7 @@ import SwiftUI
 
 struct PetDetailView: View {
     @EnvironmentObject private var auth: AuthViewModel
+    @Environment(\.dismiss) private var dismiss
     @StateObject var viewModel: PetDetailViewModel
     @State private var showEdit = false
 
@@ -14,9 +15,12 @@ struct PetDetailView: View {
                 hero
                 statsRow
                 infoSection
-                if !viewModel.vaccinations.isEmpty { vaccinationSection }
-                if !viewModel.conditions.isEmpty { conditionsSection }
-                if let notes = pet.notes, !notes.isEmpty { notesSection(notes) }
+                // Health records & notes are private — owner only
+                if isOwner {
+                    if !viewModel.vaccinations.isEmpty { vaccinationSection }
+                    if !viewModel.conditions.isEmpty { conditionsSection }
+                    if let notes = pet.notes, !notes.isEmpty { notesSection(notes) }
+                }
             }
             .padding()
         }
@@ -29,9 +33,15 @@ struct PetDetailView: View {
                 }
             }
         }
-        .sheet(isPresented: $showEdit) {
+        .sheet(isPresented: $showEdit, onDismiss: {
+            // Re-fetch so edits (breed, country, city, photo, …) show immediately
+            Task { await viewModel.load(userID: auth.userID) }
+        }) {
             NavigationStack {
-                PetFormView(viewModel: PetFormViewModel(pet: pet))
+                PetFormView(
+                    viewModel: PetFormViewModel(pet: pet),
+                    onDeleted: { dismiss() }   // pet is gone — pop back to the list
+                )
             }
         }
         .task { await viewModel.load(userID: auth.userID) }
@@ -53,7 +63,7 @@ struct PetDetailView: View {
                 if let title = pet.title { TitleBadge(title: title) }
             }
 
-            Text("\(pet.species.emoji) \(pet.breed) · \(pet.sex.symbol) \(pet.sex.label) · \(pet.age) yr\(pet.age == 1 ? "" : "s")")
+            Text("\(pet.species.emoji) \(pet.breed) · \(pet.sex.symbol) \(pet.sex.label) · \(pet.displayAge) yr\(pet.displayAge == 1 ? "" : "s")")
                 .font(.subheadline)
                 .foregroundStyle(.secondary)
 
@@ -119,7 +129,10 @@ struct PetDetailView: View {
             infoRow("Species", "\(pet.species.emoji) \(pet.species.label)")
             infoRow("Breed", pet.breed)
             infoRow("Sex", "\(pet.sex.symbol) \(pet.sex.label)")
-            infoRow("Age", "\(pet.age) year\(pet.age == 1 ? "" : "s")")
+            infoRow("Age", "\(pet.displayAge) year\(pet.displayAge == 1 ? "" : "s")")
+            if let birthday = pet.birthDateValue {
+                infoRow("Birthday", birthday.formatted(date: .abbreviated, time: .omitted))
+            }
             infoRow("Country", "\(pet.countryFlag) \(pet.countryName)")
             infoRow("City", pet.city)
             infoRow("Member since", pet.createdAt.formatted(date: .abbreviated, time: .omitted))
@@ -134,13 +147,7 @@ struct PetDetailView: View {
         VStack(alignment: .leading, spacing: 8) {
             sectionTitle("Vaccinations 💉")
             ForEach(viewModel.vaccinations) { vaccination in
-                HStack {
-                    Text(vaccination.vaccineName)
-                    Spacer()
-                    Text(vaccination.vaccinationDate.formatted(date: .abbreviated, time: .omitted))
-                        .foregroundStyle(.secondary)
-                }
-                .font(.subheadline)
+                VaccinationRow(vaccination: vaccination)
             }
         }
         .frame(maxWidth: .infinity, alignment: .leading)

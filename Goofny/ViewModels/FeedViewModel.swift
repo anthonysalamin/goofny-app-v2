@@ -18,10 +18,16 @@ final class FeedViewModel: ObservableObject {
     private let pageSize = 20
     private var reachedEnd = false
     private var searchDebounce: Task<Void, Never>?
+    private var hasLoaded = false
 
     // MARK: Loading
 
+    /// Idempotent — `.task` re-runs every time the tab re-appears,
+    /// but we must only subscribe to Realtime once.
     func initialLoad(userID: UUID?) async {
+        guard !hasLoaded else { return }
+        hasLoaded = true
+
         await reload()
         if let userID {
             votedPetIDs = (try? await voteService.votedPetIDs(voterID: userID)) ?? []

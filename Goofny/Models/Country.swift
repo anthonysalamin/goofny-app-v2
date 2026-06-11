@@ -30,20 +30,62 @@ enum Country {
 /// Common breeds for the Add/Edit pet form pickers.
 enum Breeds {
     static let dog: [String] = [
-        "Australian Shepherd", "Beagle", "Bernese Mountain Dog", "Border Collie",
-        "Boxer", "Bulldog", "Chihuahua", "Cocker Spaniel", "Corgi", "Dachshund",
-        "Dalmatian", "Doberman", "French Bulldog", "German Shepherd",
-        "Golden Retriever", "Great Dane", "Husky", "Jack Russell Terrier",
-        "Labrador Retriever", "Maltese", "Mixed Breed", "Pomeranian", "Poodle",
-        "Pug", "Rottweiler", "Samoyed", "Shiba Inu", "Shih Tzu",
-        "Yorkshire Terrier", "Other"
+        "Afghan Hound",
+        "Australian Shepherd",
+        "Beagle",
+        "Border Collie",
+        "Boxer",
+        "Bull Terrier",
+        "Bulldog",
+        "Chihuahua",
+        "Cocker Spaniel",
+        "Dachshund",
+        "Dalmatian",
+        "Doberman Pinscher",
+        "German Shepherd",
+        "German Shorthaired Pointer",
+        "Golden Retriever",
+        "Greyhound",
+        "Jack Russell Terrier",
+        "Labrador Retriever",
+        "Maltese",
+        "Mixed Breed",
+        "Pomeranian",
+        "Poodle",
+        "Rottweiler",
+        "Saint Bernard",
+        "Scottish Terrier",
+        "Shetland Sheepdog",
+        "Shih Tzu",
+        "Siberian Husky",
+        "Staffordshire Bull Terrier",
+        "Yorkshire Terrier",
+        "Other"
     ]
 
     static let cat: [String] = [
-        "Abyssinian", "Bengal", "Birman", "British Shorthair", "Burmese",
-        "Devon Rex", "Domestic Shorthair", "Exotic Shorthair", "Maine Coon",
-        "Mixed Breed", "Munchkin", "Norwegian Forest Cat", "Persian", "Ragdoll",
-        "Russian Blue", "Scottish Fold", "Siamese", "Siberian", "Sphynx", "Other"
+        "Abyssinian",
+        "American Shorthair",
+        "Balinese",
+        "Bengal",
+        "Birman",
+        "British Shorthair",
+        "Burmese",
+        "Cornish Rex",
+        "Devon Rex",
+        "Egyptian Mau",
+        "European Shorthair",
+        "Maine Coon",
+        "Mixed Breed",
+        "Norwegian Forest Cat",
+        "Oriental Shorthair",
+        "Persian",
+        "Ragdoll",
+        "Savannah",
+        "Scottish Fold",
+        "Siamese",
+        "Sphynx",
+        "Other"
     ]
 
     static func list(for species: Species) -> [String] {

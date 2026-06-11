@@ -7,7 +7,9 @@ struct StorageService {
     /// Uploads pet avatar JPEG data to `pet-avatars/{userID}/{uuid}.jpg`
     /// and returns its public URL.
     func uploadAvatar(data: Data, userID: UUID) async throws -> String {
-        let path = "\(userID.uuidString)/\(UUID().uuidString).jpg"
+        // Lowercased to match the RLS policy: auth.uid()::text is lowercase,
+        // while Swift's UUID.uuidString is uppercase.
+        let path = "\(userID.uuidString.lowercased())/\(UUID().uuidString.lowercased()).jpg"
         try await client.storage
             .from(AppConfig.avatarBucket)
             .upload(path, data: data, options: FileOptions(contentType: "image/jpeg"))

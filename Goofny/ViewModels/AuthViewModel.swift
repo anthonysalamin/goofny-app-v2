@@ -19,7 +19,17 @@ final class AuthViewModel: ObservableObject {
     func observeAuthState() async {
         for await (event, session) in SupabaseManager.shared.client.auth.authStateChanges {
             switch event {
-            case .initialSession, .signedIn, .tokenRefreshed:
+            case .initialSession:
+                // With `emitLocalSessionAsInitialSession: true`, the locally stored
+                // session is emitted even if expired — so validate it here.
+                // If it's expired, the client refreshes it and emits .tokenRefreshed.
+                if let session, !session.isExpired {
+                    state = .signedIn
+                    await loadProfile()
+                } else {
+                    state = .signedOut
+                }
+            case .signedIn, .tokenRefreshed:
                 if session != nil {
                     state = .signedIn
                     await loadProfile()
@@ -49,7 +59,11 @@ final class AuthViewModel: ObservableObject {
     func signUp(email: String, password: String, displayName: String) async {
         await run {
             try await self.service.signUp(email: email, password: password, displayName: displayName)
-            self.infoMessage = "Check your inbox to confirm your email."
+            // If email confirmation is enabled, no session exists yet.
+            // With autoconfirm (dev), a session is created and the app signs in automatically.
+            if self.service.currentUserID == nil {
+                self.infoMessage = "Check your inbox to confirm your email."
+            }
         }
     }
 

@@ -50,6 +50,12 @@ struct HomeFeedView: View {
             }
             .refreshable { await viewModel.reload() }
             .task { await viewModel.initialLoad(userID: auth.userID) }
+            .onAppear {
+                // Refresh when returning to this tab (e.g. after adding a pet)
+                if !viewModel.pets.isEmpty {
+                    Task { await viewModel.reload() }
+                }
+            }
             .alert("Oops", isPresented: .constant(viewModel.errorMessage != nil)) {
                 Button("OK") { viewModel.errorMessage = nil }
             } message: {

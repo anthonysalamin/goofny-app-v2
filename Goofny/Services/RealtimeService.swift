@@ -8,7 +8,9 @@ final class RealtimeService {
     private var task: Task<Void, Never>?
 
     /// Calls `onPetUpdated` whenever a pet row changes (e.g. votes_count).
+    /// Safe to call multiple times — only the first call subscribes.
     func subscribeToPetUpdates(onPetUpdated: @escaping @MainActor (UUID, Int) -> Void) async {
+        guard self.channel == nil else { return }
         let channel = client.channel("public:pets")
         let updates = channel.postgresChange(UpdateAction.self, schema: "public", table: "pets")
 

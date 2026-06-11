@@ -6,9 +6,25 @@ struct PetFormView: View {
     @EnvironmentObject private var auth: AuthViewModel
     @Environment(\.dismiss) private var dismiss
     @StateObject var viewModel: PetFormViewModel
+    /// Called after a successful save (create or edit).
+    var onSaved: (() -> Void)? = nil
+    /// Called after the pet was deleted.
+    var onDeleted: (() -> Void)? = nil
 
-    @State private var newVaccineName = ""
-    @State private var newVaccineDate = Date()
+    /// Single sheet driver — two stacked `.sheet` modifiers inside a Form
+    /// section cause immediate-dismiss glitches.
+    private enum VaccineSheetMode: Identifiable {
+        case add
+        case edit(Vaccination)
+        var id: String {
+            switch self {
+            case .add: return "add"
+            case .edit(let vaccination): return vaccination.id.uuidString
+            }
+        }
+    }
+
+    @State private var vaccineSheet: VaccineSheetMode?
     @State private var newConditionName = ""
     @State private var newConditionNotes = ""
     @State private var showDeleteConfirm = false
@@ -19,13 +35,36 @@ struct PetFormView: View {
             basicsSection
             locationSection
             notesSection
+            vaccinationsSection
+            conditionsSection
             if viewModel.isEditing {
-                vaccinationsSection
-                conditionsSection
                 deleteSection
             }
-            if let error = viewModel.errorMessage {
-                Text(error).foregroundStyle(.red).font(.footnote)
+        }
+        .toast(message: $viewModel.errorMessage)
+        .sheet(item: $vaccineSheet) { mode in
+            switch mode {
+            case .add:
+                VaccineFormView(species: viewModel.species, existing: nil) { name, date, months, reminder in
+                    if viewModel.isEditing {
+                        await viewModel.saveVaccination(
+                            existing: nil, vaccineName: name, date: date,
+                            protectionMonths: months, reminderEnabled: reminder
+                        )
+                    } else {
+                        viewModel.addPendingVaccination(
+                            name: name, date: date,
+                            protectionMonths: months, reminderEnabled: reminder
+                        )
+                    }
+                }
+            case .edit(let vaccination):
+                VaccineFormView(species: viewModel.species, existing: vaccination) { name, date, months, reminder in
+                    await viewModel.saveVaccination(
+                        existing: vaccination, vaccineName: name, date: date,
+                        protectionMonths: months, reminderEnabled: reminder
+                    )
+                }
             }
         }
         .navigationTitle(viewModel.isEditing ? "Edit \(viewModel.name)" : "Add Pet")
@@ -37,7 +76,7 @@ struct PetFormView: View {
                 } label: {
                     if viewModel.isSaving { ProgressView() } else { Text("Save").bold() }
                 }
-                .disabled(!viewModel.isValid || viewModel.isSaving)
+                .disabled(viewModel.isSaving)
             }
             if viewModel.isEditing {
                 ToolbarItem(placement: .cancellationAction) {
@@ -47,12 +86,18 @@ struct PetFormView: View {
         }
         .task { await viewModel.loadHealthRecords() }
         .onChange(of: viewModel.didSave) { _, saved in
-            if saved { dismiss() }
+            if saved {
+                dismiss()
+                onSaved?()
+            }
         }
         .alert("Delete \(viewModel.name)?", isPresented: $showDeleteConfirm) {
             Button("Delete", role: .destructive) {
                 Task {
-                    if await viewModel.deletePet() { dismiss() }
+                    if await viewModel.deletePet() {
+                        dismiss()
+                        onDeleted?()
+                    }
                 }
             }
             Button("Cancel", role: .cancel) {}
@@ -117,14 +162,24 @@ struct PetFormView: View {
             }
             .pickerStyle(.segmented)
 
-            Picker("Breed", selection: $viewModel.breed) {
-                Text("Select a breed").tag("")
-                ForEach(Breeds.list(for: viewModel.species), id: \.self) { breed in
-                    Text(breed).tag(breed)
+            NavigationLink {
+                BreedPickerView(species: viewModel.species, selection: $viewModel.breed)
+            } label: {
+                HStack {
+                    Text("Breed")
+                    Spacer()
+                    Text(viewModel.breed.isEmpty ? "Select a breed" : viewModel.breed)
+                        .foregroundStyle(viewModel.breed.isEmpty ? .secondary : .primary)
                 }
             }
 
-            Stepper("Age: \(viewModel.age) year\(viewModel.age == 1 ? "" : "s")", value: $viewModel.age, in: 0...50)
+            DatePicker(
+                "Birth date",
+                selection: $viewModel.birthDate,
+                in: ...Date.now,
+                displayedComponents: .date
+            )
+            LabeledContent("Age", value: "\(viewModel.age) year\(viewModel.age == 1 ? "" : "s")")
         }
     }
 
@@ -148,64 +203,95 @@ struct PetFormView: View {
 
     private var vaccinationsSection: some View {
         Section("Vaccinations 💉") {
-            ForEach(viewModel.vaccinations) { vaccination in
-                HStack {
-                    Text(vaccination.vaccineName)
-                    Spacer()
-                    Text(vaccination.vaccinationDate.formatted(date: .abbreviated, time: .omitted))
-                        .foregroundStyle(.secondary)
-                }
-                .swipeActions {
-                    Button("Delete", role: .destructive) {
-                        Task { await viewModel.deleteVaccination(vaccination) }
+            if viewModel.isEditing {
+                ForEach(viewModel.vaccinations) { vaccination in
+                    Button {
+                        vaccineSheet = .edit(vaccination)
+                    } label: {
+                        VaccinationRow(vaccination: vaccination)
+                    }
+                    .buttonStyle(.plain)
+                    .swipeActions {
+                        Button("Delete", role: .destructive) {
+                            Task { await viewModel.deleteVaccination(vaccination) }
+                        }
                     }
                 }
-            }
-            HStack {
-                TextField("Vaccine name", text: $newVaccineName)
-                DatePicker("", selection: $newVaccineDate, displayedComponents: .date)
-                    .labelsHidden()
-                Button {
-                    Task {
-                        await viewModel.addVaccination(name: newVaccineName, date: newVaccineDate)
-                        newVaccineName = ""
-                    }
-                } label: {
-                    Image(systemName: "plus.circle.fill")
+            } else {
+                ForEach(viewModel.pendingVaccinations) { pending in
+                    VaccinationRow(vaccination: pending.displayRow)
+                        .swipeActions {
+                            Button("Delete", role: .destructive) {
+                                viewModel.removePendingVaccination(pending)
+                            }
+                        }
                 }
-                .disabled(newVaccineName.isEmpty)
             }
+
+            Button {
+                vaccineSheet = .add
+            } label: {
+                Label("Add vaccine", systemImage: "plus.circle.fill")
+                    .foregroundStyle(.orange)
+            }
+            .buttonStyle(.borderless)
         }
     }
 
     private var conditionsSection: some View {
         Section("Medical Conditions 🏥") {
-            ForEach(viewModel.conditions) { condition in
-                VStack(alignment: .leading) {
-                    Text(condition.conditionName)
-                    if let notes = condition.notes {
-                        Text(notes).font(.caption).foregroundStyle(.secondary)
+            if viewModel.isEditing {
+                ForEach(viewModel.conditions) { condition in
+                    VStack(alignment: .leading) {
+                        Text(condition.conditionName)
+                        if let notes = condition.notes {
+                            Text(notes).font(.caption).foregroundStyle(.secondary)
+                        }
+                    }
+                    .swipeActions {
+                        Button("Delete", role: .destructive) {
+                            Task { await viewModel.deleteCondition(condition) }
+                        }
                     }
                 }
-                .swipeActions {
-                    Button("Delete", role: .destructive) {
-                        Task { await viewModel.deleteCondition(condition) }
+            } else {
+                ForEach(viewModel.pendingConditions) { pending in
+                    VStack(alignment: .leading) {
+                        Text(pending.name)
+                        if !pending.notes.isEmpty {
+                            Text(pending.notes).font(.caption).foregroundStyle(.secondary)
+                        }
+                    }
+                    .swipeActions {
+                        Button("Delete", role: .destructive) {
+                            viewModel.removePendingCondition(pending)
+                        }
                     }
                 }
             }
+
             VStack {
                 TextField("Condition name", text: $newConditionName)
                 HStack {
                     TextField("Notes (optional)", text: $newConditionNotes)
                     Button {
-                        Task {
-                            await viewModel.addCondition(name: newConditionName, notes: newConditionNotes)
+                        if viewModel.isEditing {
+                            Task {
+                                await viewModel.addCondition(name: newConditionName, notes: newConditionNotes)
+                                newConditionName = ""
+                                newConditionNotes = ""
+                            }
+                        } else {
+                            viewModel.addPendingCondition(name: newConditionName, notes: newConditionNotes)
                             newConditionName = ""
                             newConditionNotes = ""
                         }
                     } label: {
                         Image(systemName: "plus.circle.fill")
+                            .font(.title3)
+                            .foregroundStyle(.orange)
                     }
+                    .buttonStyle(.borderless)
                     .disabled(newConditionName.isEmpty)
                 }
             }
