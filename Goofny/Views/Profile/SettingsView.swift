@@ -22,7 +22,7 @@ struct SettingsView: View {
                 }
 
                 Section("About") {
-                    LabeledContent("Version", value: "2.0.0")
+                    LabeledContent("Version", value: AppConfig.appVersion)
                     Link("Terms of Service", destination: URL(string: "https://goofny.com/terms-of-service")!)
                     Link("Privacy Policy", destination: URL(string: "https://goofny.com/privacy-policy")!)
                 }

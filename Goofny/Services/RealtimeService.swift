@@ -14,7 +14,7 @@ final class RealtimeService {
         let channel = client.channel("public:pets")
         let updates = channel.postgresChange(UpdateAction.self, schema: "public", table: "pets")
 
-        await channel.subscribe()
+        try? await channel.subscribeWithError()
         self.channel = channel
 
         task = Task {

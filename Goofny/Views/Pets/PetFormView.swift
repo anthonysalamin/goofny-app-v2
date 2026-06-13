@@ -109,17 +109,20 @@ struct PetFormView: View {
     // MARK: Sections
 
     private var photoSection: some View {
-        Section("Photo *") {
+        let avatarImage = viewModel.avatarImage
+        let isEditing = viewModel.isEditing
+        let editingPet = viewModel.editingPet
+        return Section("Photo *") {
             HStack {
                 Spacer()
                 PhotosPicker(selection: $viewModel.photoItem, matching: .images) {
-                    if let image = viewModel.avatarImage {
+                    if let image = avatarImage {
                         image
                             .resizable()
                             .scaledToFill()
                             .frame(width: 140, height: 140)
                             .clipShape(RoundedRectangle(cornerRadius: 24))
-                    } else if viewModel.isEditing, let pet = viewModel.editingPet {
+                    } else if isEditing, let pet = editingPet {
                         PetAvatarView(urlString: pet.avatarUrl, size: 140, cornerRadius: 24)
                             .overlay(alignment: .bottomTrailing) { editBadge }
                     } else {

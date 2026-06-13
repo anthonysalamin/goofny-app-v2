@@ -12,4 +12,8 @@ enum AppConfig {
     static let authRedirectURL = URL(string: "goofny://auth-callback")!
 
     static let avatarBucket = "pet-avatars"
+
+    static var appVersion: String {
+        Bundle.main.infoDictionary?["CFBundleShortVersionString"] as? String ?? "—"
+    }
 }
