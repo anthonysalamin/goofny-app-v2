@@ -19,7 +19,7 @@ A social app where pet owners showcase their dogs and cats, vote for the cutest,
 - "Get Started" and "Log in" CTAs
 
 ### Sign Up / Log In
-- Sign in with Apple, Google, email/password
+- Sign in with Facebook, Google, email/password
 - Toggle between login and signup
 - "Forgot password" flow
 
