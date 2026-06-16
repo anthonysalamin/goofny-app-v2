@@ -147,7 +147,7 @@ struct PetDetailView: View {
         VStack(alignment: .leading, spacing: 8) {
             sectionTitle("Vaccinations 💉")
             ForEach(viewModel.vaccinations) { vaccination in
-                VaccinationRow(vaccination: vaccination)
+                VaccinationRow(species: pet.species, vaccination: vaccination)
             }
         }
         .frame(maxWidth: .infinity, alignment: .leading)

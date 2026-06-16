@@ -28,7 +28,7 @@ struct NotificationService {
             await schedule(
                 id: "vaccine-\(vaccination.id.uuidString)-soon",
                 title: "💉 Vaccine renewal coming up",
-                body: "\(petName)'s \(vaccination.vaccineName) vaccine is due on \(dueDate.formatted(date: .abbreviated, time: .omitted)).",
+                body: "\(petName)'s \(vaccination.vaccineType) vaccine is due on \(dueDate.formatted(date: .abbreviated, time: .omitted)).",
                 at: soonDate
             )
         }
@@ -37,7 +37,7 @@ struct NotificationService {
             await schedule(
                 id: "vaccine-\(vaccination.id.uuidString)-due",
                 title: "💉 Vaccine renewal due",
-                body: "\(petName)'s \(vaccination.vaccineName) vaccine is due for renewal today.",
+                body: "\(petName)'s \(vaccination.vaccineType) vaccine is due for renewal today.",
                 at: dueDate
             )
         }

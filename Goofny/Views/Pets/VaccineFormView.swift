@@ -1,37 +1,60 @@
 import SwiftUI
 
+// MARK: - Form state
+
+/// Holds all mutable state for the vaccine form.
+/// Using @Observable lets SwiftUI re-render only the section that changed a property,
+/// so typing in the vet/clinic fields doesn't force the Picker or DatePicker to re-render.
+@Observable
+private final class VaccineFormState {
+    var selectedVaccineID: String?
+    var customVaccine: VaccineInfo?
+    var dateGiven: Date = .now
+    /// Captured once so the DatePicker range stays stable across re-renders.
+    let maxDate: Date = .now
+    var protectionDurationMonths: Int = 12
+    var isCustomDuration = false
+    var vetName = ""
+    var clinicName = ""
+    var clinicLocation = ""
+    var batchNumber = ""
+    var notes = ""
+    var reminderEnabled = false
+    var isSaving = false
+    var errorMessage: String?
+}
+
+// MARK: - View
+
 /// Add or edit a vaccine record for a pet.
 /// The vaccine list adapts to the pet's species (dog / cat).
 struct VaccineFormView: View {
     let species: Species
     let existing: Vaccination?
-    let onSave: (_ vaccineName: String, _ date: Date, _ protectionMonths: Int, _ reminderEnabled: Bool) async -> Void
+    let onSave: (VaccinationFormData) async -> Void
 
     @Environment(\.dismiss) private var dismiss
-
-    @State private var selectedVaccine: VaccineInfo?
-    @State private var administeredDate: Date = .now
-    @State private var protectionMonths: Int = 12
-    @State private var isCustomDuration = false
-    @State private var reminderEnabled = false
-    @State private var isSaving = false
-    @State private var errorMessage: String?
+    @State private var formState = VaccineFormState()
 
     private var catalog: [VaccineInfo] { VaccineCatalog.list(for: species) }
     private var isEditing: Bool { existing != nil }
 
-    private var nextDueDate: Date {
-        Calendar.current.date(byAdding: .month, value: protectionMonths, to: administeredDate) ?? administeredDate
+    private var selectedVaccine: VaccineInfo? {
+        guard let id = formState.selectedVaccineID else { return nil }
+        return catalog.first { $0.id == id } ?? formState.customVaccine
     }
 
     var body: some View {
+        @Bindable var state = formState
         NavigationStack {
             Form {
-                vaccineSection
+                VaccinePickerSection(formState: formState, species: species, catalog: catalog)
                 if selectedVaccine != nil {
-                    dateSection
-                    durationSection
-                    reminderSection
+                    VaccineDateSection(formState: formState)
+                    VaccineDurationSection(formState: formState, catalog: catalog)
+                    VetClinicSection(formState: formState)
+                    VaccineNotesSection(formState: formState)
+                    VaccineReminderSection(formState: formState)
                 }
             }
             .navigationTitle(isEditing ? "Edit Vaccine" : "Add Vaccine")
@@ -44,128 +67,223 @@ struct VaccineFormView: View {
                     Button {
                         Task { await save() }
                     } label: {
-                        if isSaving { ProgressView() } else { Text("Save").bold() }
+                        if formState.isSaving { ProgressView() } else { Text("Save").bold() }
                     }
-                    .disabled(selectedVaccine == nil || isSaving)
+                    .disabled(selectedVaccine == nil || formState.isSaving)
                 }
             }
-            .toast(message: $errorMessage)
+            .toast(message: $state.errorMessage)
             .onAppear(perform: prefill)
         }
         .presentationDetents([.large])
     }
 
-    // MARK: Sections
-
-    private var vaccineSection: some View {
-        Section("\(species.emoji) \(species.label) vaccine") {
-            Picker("Vaccine", selection: $selectedVaccine) {
-                Text("Select a vaccine").tag(VaccineInfo?.none)
-                ForEach(catalog) { vaccine in
-                    Text(vaccine.name).tag(VaccineInfo?.some(vaccine))
-                }
-            }
-            .onChange(of: selectedVaccine) { _, newValue in
-                // Pre-fill the default protection duration unless the user customized it
-                if let newValue, !isCustomDuration {
-                    protectionMonths = newValue.defaultMonths
-                }
-            }
-
-            if let note = selectedVaccine?.durationNote {
-                Text(note)
-                    .font(.caption)
-                    .foregroundStyle(.secondary)
-            }
-        }
-    }
-
-    private var dateSection: some View {
-        Section("Administered on") {
-            DatePicker(
-                "Date",
-                selection: $administeredDate,
-                in: ...Date.now,
-                displayedComponents: .date
-            )
-        }
-    }
-
-    private var durationSection: some View {
-        Section {
-            Toggle("Custom duration", isOn: $isCustomDuration.animation())
-                .onChange(of: isCustomDuration) { _, custom in
-                    if !custom, let vaccine = selectedVaccine {
-                        protectionMonths = vaccine.defaultMonths
-                    }
-                }
-
-            if isCustomDuration {
-                Stepper(value: $protectionMonths, in: 1...120) {
-                    LabeledContent("Protection", value: VaccineInfo.durationLabel(months: protectionMonths))
-                }
-            } else {
-                LabeledContent("Protection (default)", value: VaccineInfo.durationLabel(months: protectionMonths))
-            }
-
-            LabeledContent("Next renewal", value: nextDueDate.formatted(date: .abbreviated, time: .omitted))
-                .foregroundStyle(nextDueDate < .now ? .red : .primary)
-        } header: {
-            Text("Protection duration")
-        } footer: {
-            if let vaccine = selectedVaccine {
-                Text("Default for \(vaccine.name): \(vaccine.defaultDurationLabel). Enable custom duration to override (e.g. for local regulations).")
-            }
-        }
-    }
-
-    private var reminderSection: some View {
-        Section {
-            Toggle("Notify me when renewal is due", isOn: $reminderEnabled)
-        } footer: {
-            Text("You'll get a notification 14 days before the renewal date and on the day itself.")
-        }
-    }
-
-    // MARK: Logic
-
     private func prefill() {
         guard let existing else { return }
-        selectedVaccine = VaccineCatalog.info(name: existing.vaccineName, species: species)
-            ?? VaccineInfo(name: existing.vaccineName, defaultMonths: existing.protectionMonths, durationNote: nil)
-        administeredDate = existing.date ?? .now
-        protectionMonths = existing.protectionMonths
-        isCustomDuration = existing.protectionMonths != selectedVaccine?.defaultMonths
-        reminderEnabled = existing.reminderEnabled
+        if let match = VaccineCatalog.info(name: existing.vaccineType, species: species) {
+            formState.selectedVaccineID = match.id
+        } else {
+            formState.customVaccine = VaccineInfo(
+                name: existing.vaccineType,
+                defaultMonths: existing.protectionDurationMonths,
+                durationNote: nil,
+                description: existing.description(for: species) ?? "Vaccine record for \(existing.vaccineType).",
+                diseasesCovered: existing.diseaseCovered
+            )
+            formState.selectedVaccineID = existing.vaccineType
+        }
+        formState.dateGiven = existing.date ?? .now
+        formState.protectionDurationMonths = existing.protectionDurationMonths
+        formState.isCustomDuration = existing.protectionDurationMonths != selectedVaccine?.defaultMonths
+        formState.vetName = existing.vetName ?? ""
+        formState.clinicName = existing.clinicName ?? ""
+        formState.clinicLocation = existing.clinicLocation ?? ""
+        formState.batchNumber = existing.batchNumber ?? ""
+        formState.notes = existing.notes ?? ""
+        formState.reminderEnabled = existing.reminderEnabled
     }
 
     private func save() async {
         guard let vaccine = selectedVaccine else { return }
-        isSaving = true
-        defer { isSaving = false }
+        formState.isSaving = true
+        defer { formState.isSaving = false }
 
-        if reminderEnabled {
+        if formState.reminderEnabled {
             let granted = await NotificationService().requestPermission()
             if !granted {
-                errorMessage = "Notifications are disabled for Goofny. Enable them in Settings to get renewal reminders."
+                formState.errorMessage = "Notifications are disabled for Goofny. Enable them in Settings to get renewal reminders."
             }
         }
 
-        await onSave(vaccine.name, administeredDate, protectionMonths, reminderEnabled)
+        await onSave(VaccinationFormData(
+            vaccineType: vaccine.name,
+            diseaseCovered: vaccine.diseasesCovered,
+            dateGiven: formState.dateGiven,
+            protectionDurationMonths: formState.protectionDurationMonths,
+            vetName: formState.vetName,
+            clinicName: formState.clinicName,
+            clinicLocation: formState.clinicLocation,
+            batchNumber: formState.batchNumber,
+            notes: formState.notes,
+            reminderEnabled: formState.reminderEnabled
+        ))
         dismiss()
+    }
+}
+
+// MARK: - Section subviews
+
+private struct VaccinePickerSection: View {
+    @Bindable var formState: VaccineFormState
+    let species: Species
+    let catalog: [VaccineInfo]
+
+    private var selectedVaccine: VaccineInfo? {
+        guard let id = formState.selectedVaccineID else { return nil }
+        return catalog.first { $0.id == id } ?? formState.customVaccine
+    }
+
+    var body: some View {
+        Section("\(species.emoji) \(species.label) vaccine") {
+            Picker("Vaccine type", selection: $formState.selectedVaccineID) {
+                Text("Select a vaccine").tag(String?.none)
+                ForEach(catalog) { vaccine in
+                    Text(vaccine.name).tag(Optional(vaccine.id))
+                }
+            }
+            .onChange(of: formState.selectedVaccineID) { _, _ in
+                if let selectedVaccine, !formState.isCustomDuration {
+                    formState.protectionDurationMonths = selectedVaccine.defaultMonths
+                }
+            }
+
+            if let vaccine = selectedVaccine {
+                Text(vaccine.description)
+                    .font(.subheadline)
+                    .foregroundStyle(.secondary)
+
+                if !vaccine.diseasesCovered.isEmpty {
+                    LabeledContent("Protects against") {
+                        Text(vaccine.diseasesCovered.joined(separator: ", "))
+                            .multilineTextAlignment(.trailing)
+                    }
+                    .font(.caption)
+                }
+
+                if let note = vaccine.durationNote {
+                    Text(note)
+                        .font(.caption)
+                        .foregroundStyle(.tertiary)
+                }
+            }
+        }
+    }
+}
+
+private struct VaccineDateSection: View {
+    @Bindable var formState: VaccineFormState
+
+    var body: some View {
+        Section("Date given") {
+            DatePicker(
+                "Date given",
+                selection: $formState.dateGiven,
+                in: ...formState.maxDate,
+                displayedComponents: .date
+            )
+        }
+    }
+}
+
+private struct VaccineDurationSection: View {
+    @Bindable var formState: VaccineFormState
+    let catalog: [VaccineInfo]
+
+    private var selectedVaccine: VaccineInfo? {
+        guard let id = formState.selectedVaccineID else { return nil }
+        return catalog.first { $0.id == id } ?? formState.customVaccine
+    }
+
+    private var nextDueDate: Date {
+        Calendar.current.date(byAdding: .month, value: formState.protectionDurationMonths, to: formState.dateGiven) ?? formState.dateGiven
+    }
+
+    var body: some View {
+        Section {
+            Toggle("Custom duration", isOn: $formState.isCustomDuration.animation())
+                .onChange(of: formState.isCustomDuration) { _, custom in
+                    if !custom, let vaccine = selectedVaccine {
+                        formState.protectionDurationMonths = vaccine.defaultMonths
+                    }
+                }
+
+            if formState.isCustomDuration {
+                Stepper(value: $formState.protectionDurationMonths, in: 1...120) {
+                    LabeledContent("Protection duration", value: VaccineInfo.durationLabel(months: formState.protectionDurationMonths))
+                }
+            } else {
+                LabeledContent("Protection duration (default)", value: VaccineInfo.durationLabel(months: formState.protectionDurationMonths))
+            }
+
+            LabeledContent("Next due date", value: nextDueDate.formatted(date: .abbreviated, time: .omitted))
+                .foregroundStyle(nextDueDate < .now ? .red : .primary)
+        } header: {
+            Text("Protection")
+        } footer: {
+            if let vaccine = selectedVaccine {
+                Text("Default for \(vaccine.name): \(vaccine.defaultDurationLabel). Turn on custom duration to change it (for example, if your vet gave a different schedule).")
+            }
+        }
+    }
+}
+
+private struct VetClinicSection: View {
+    @Bindable var formState: VaccineFormState
+
+    var body: some View {
+        Section("Vet & clinic") {
+            TextField("Vet name", text: $formState.vetName)
+            TextField("Clinic name", text: $formState.clinicName)
+            TextField("Clinic location", text: $formState.clinicLocation)
+            TextField("Batch number", text: $formState.batchNumber)
+        }
+    }
+}
+
+private struct VaccineNotesSection: View {
+    @Bindable var formState: VaccineFormState
+
+    var body: some View {
+        Section("Notes") {
+            TextField("Anything else to remember", text: $formState.notes, axis: .vertical)
+                .lineLimit(3...6)
+        }
+    }
+}
+
+private struct VaccineReminderSection: View {
+    @Bindable var formState: VaccineFormState
+
+    var body: some View {
+        Section {
+            Toggle("Notify me when renewal is due", isOn: $formState.reminderEnabled)
+        } footer: {
+            Text("You'll get a notification 14 days before the due date and on the day itself.")
+        }
     }
 }
 
 // MARK: - Vaccination row (shared by the pet form and detail screen)
 
 struct VaccinationRow: View {
+    let species: Species
     let vaccination: Vaccination
 
     var body: some View {
-        HStack {
-            VStack(alignment: .leading, spacing: 2) {
+        HStack(alignment: .top) {
+            VStack(alignment: .leading, spacing: 4) {
                 HStack(spacing: 6) {
-                    Text(vaccination.vaccineName)
+                    Text(vaccination.vaccineType)
                         .font(.subheadline.bold())
                     if vaccination.reminderEnabled {
                         Image(systemName: "bell.fill")
@@ -173,14 +291,45 @@ struct VaccinationRow: View {
                             .foregroundStyle(.orange)
                     }
                 }
-                Text("Given \(vaccination.displayDate) · protects \(VaccineInfo.durationLabel(months: vaccination.protectionMonths))")
-                    .font(.caption)
+
+                if let description = vaccination.description(for: species) {
+                    Text(description)
+                        .font(.caption)
+                        .foregroundStyle(.secondary)
+                }
+
+                if let diseases = vaccination.diseasesLabel {
+                    Text("Protects against: \(diseases)")
+                        .font(.caption2)
+                        .foregroundStyle(.secondary)
+                }
+
+                Text("Given \(vaccination.displayDate) · protects \(VaccineInfo.durationLabel(months: vaccination.protectionDurationMonths))")
+                    .font(.caption2)
                     .foregroundStyle(.secondary)
+
+                if let vetClinic = vaccination.vetClinicLabel {
+                    Text(vetClinic)
+                        .font(.caption2)
+                        .foregroundStyle(.secondary)
+                }
+
+                if let batch = vaccination.batchNumber, !batch.isEmpty {
+                    Text("Batch: \(batch)")
+                        .font(.caption2)
+                        .foregroundStyle(.secondary)
+                }
+
+                if let notes = vaccination.notes, !notes.isEmpty {
+                    Text(notes)
+                        .font(.caption2)
+                        .foregroundStyle(.secondary)
+                }
             }
             Spacer()
             if let due = vaccination.nextDueDate {
                 VStack(alignment: .trailing, spacing: 2) {
-                    Text(vaccination.isOverdue ? "Overdue" : "Renews")
+                    Text(vaccination.isOverdue ? "Overdue" : "Due")
                         .font(.caption2.bold())
                         .foregroundStyle(statusColor)
                     Text(due.formatted(date: .abbreviated, time: .omitted))

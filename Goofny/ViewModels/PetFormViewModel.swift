@@ -141,15 +141,9 @@ final class PetFormViewModel: ObservableObject {
                 // Persist health records collected during creation
                 for pending in pendingVaccinations {
                     let saved = try await petService.addVaccination(
-                        VaccinationPayload(
-                            petId: newPet.id,
-                            vaccineName: pending.vaccineName,
-                            vaccinationDate: Vaccination.dayFormatter.string(from: pending.date),
-                            protectionMonths: pending.protectionMonths,
-                            reminderEnabled: pending.reminderEnabled
-                        )
+                        VaccinationPayload(from: pending.form, petId: newPet.id)
                     )
-                    if pending.reminderEnabled {
+                    if pending.form.reminderEnabled {
                         await NotificationService().scheduleRenewalReminders(for: saved, petName: newPet.name)
                     }
                 }
@@ -174,21 +168,9 @@ final class PetFormViewModel: ObservableObject {
     // MARK: Health records
 
     /// Insert or update a vaccine record, then (re)schedule renewal reminders.
-    func saveVaccination(
-        existing: Vaccination?,
-        vaccineName: String,
-        date: Date,
-        protectionMonths: Int,
-        reminderEnabled: Bool
-    ) async {
+    func saveVaccination(existing: Vaccination?, form: VaccinationFormData) async {
         guard let pet = editingPet else { return }
-        let payload = VaccinationPayload(
-            petId: pet.id,
-            vaccineName: vaccineName,
-            vaccinationDate: Vaccination.dayFormatter.string(from: date),
-            protectionMonths: protectionMonths,
-            reminderEnabled: reminderEnabled
-        )
+        let payload = VaccinationPayload(from: form, petId: pet.id)
         do {
             let saved: Vaccination
             if let existing {
@@ -196,10 +178,16 @@ final class PetFormViewModel: ObservableObject {
                 saved = Vaccination(
                     id: existing.id,
                     petId: pet.id,
-                    vaccineName: vaccineName,
-                    vaccinationDate: payload.vaccinationDate,
-                    protectionMonths: protectionMonths,
-                    reminderEnabled: reminderEnabled
+                    vaccineType: form.vaccineType,
+                    diseaseCovered: form.diseaseCovered,
+                    dateGiven: payload.dateGiven,
+                    protectionDurationMonths: form.protectionDurationMonths,
+                    vetName: payload.vetName,
+                    clinicName: payload.clinicName,
+                    clinicLocation: payload.clinicLocation,
+                    batchNumber: payload.batchNumber,
+                    notes: payload.notes,
+                    reminderEnabled: form.reminderEnabled
                 )
             } else {
                 saved = try await petService.addVaccination(payload)
@@ -244,11 +232,8 @@ final class PetFormViewModel: ObservableObject {
 
     // MARK: Pending health records (create mode)
 
-    func addPendingVaccination(name: String, date: Date, protectionMonths: Int, reminderEnabled: Bool) {
-        pendingVaccinations.append(
-            PendingVaccination(vaccineName: name, date: date,
-                               protectionMonths: protectionMonths, reminderEnabled: reminderEnabled)
-        )
+    func addPendingVaccination(form: VaccinationFormData) {
+        pendingVaccinations.append(PendingVaccination(form: form))
     }
 
     func removePendingVaccination(_ pending: PendingVaccination) {
@@ -279,20 +264,23 @@ final class PetFormViewModel: ObservableObject {
 /// Vaccine entered while creating a pet (not yet persisted).
 struct PendingVaccination: Identifiable, Hashable {
     let id = UUID()
-    var vaccineName: String
-    var date: Date
-    var protectionMonths: Int
-    var reminderEnabled: Bool
+    var form: VaccinationFormData
 
     /// Adapter so `VaccinationRow` can render pending entries too.
     var displayRow: Vaccination {
         Vaccination(
             id: id,
             petId: id,
-            vaccineName: vaccineName,
-            vaccinationDate: Vaccination.dayFormatter.string(from: date),
-            protectionMonths: protectionMonths,
-            reminderEnabled: reminderEnabled
+            vaccineType: form.vaccineType,
+            diseaseCovered: form.diseaseCovered,
+            dateGiven: Vaccination.dayFormatter.string(from: form.dateGiven),
+            protectionDurationMonths: form.protectionDurationMonths,
+            vetName: form.vetName.nilIfBlank,
+            clinicName: form.clinicName.nilIfBlank,
+            clinicLocation: form.clinicLocation.nilIfBlank,
+            batchNumber: form.batchNumber.nilIfBlank,
+            notes: form.notes.nilIfBlank,
+            reminderEnabled: form.reminderEnabled
         )
     }
 }

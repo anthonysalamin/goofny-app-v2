@@ -112,27 +112,48 @@ struct PetPayload: Codable {
 
 // MARK: - Vaccination
 
+/// Values collected in the add/edit vaccine form.
+struct VaccinationFormData: Hashable {
+    var vaccineType: String
+    var diseaseCovered: [String]
+    var dateGiven: Date
+    var protectionDurationMonths: Int
+    var vetName: String
+    var clinicName: String
+    var clinicLocation: String
+    var batchNumber: String
+    var notes: String
+    var reminderEnabled: Bool
+}
+
 struct Vaccination: Codable, Identifiable, Hashable {
     let id: UUID
     let petId: UUID
-    var vaccineName: String
+    var vaccineType: String
+    var diseaseCovered: [String]
     /// Postgres `date` column — transported as "yyyy-MM-dd".
-    /// (A Swift `Date` can't be decoded from a plain date string.)
-    var vaccinationDate: String
-    /// How long the vaccine protects, in months (default from catalog, user-overridable).
-    var protectionMonths: Int
-    /// Whether the user wants a renewal notification.
+    var dateGiven: String
+    var protectionDurationMonths: Int
+    var vetName: String?
+    var clinicName: String?
+    var clinicLocation: String?
+    var batchNumber: String?
+    var notes: String?
     var reminderEnabled: Bool
 
-    var date: Date? { Self.dayFormatter.date(from: vaccinationDate) }
+    var date: Date? { Self.dayFormatter.date(from: dateGiven) }
     var displayDate: String {
-        date?.formatted(date: .abbreviated, time: .omitted) ?? vaccinationDate
+        date?.formatted(date: .abbreviated, time: .omitted) ?? dateGiven
     }
 
-    /// vaccine date + protection duration
+    /// date given + protection duration
     var nextDueDate: Date? {
         guard let date else { return nil }
-        return Calendar.current.date(byAdding: .month, value: protectionMonths, to: date)
+        return Calendar.current.date(byAdding: .month, value: protectionDurationMonths, to: date)
+    }
+
+    var displayNextDueDate: String? {
+        nextDueDate?.formatted(date: .abbreviated, time: .omitted)
     }
 
     var isOverdue: Bool {
@@ -146,6 +167,24 @@ struct Vaccination: Codable, Identifiable, Hashable {
         return due < Calendar.current.date(byAdding: .day, value: 30, to: .now)!
     }
 
+    /// Plain-English description from the catalog, when available.
+    func description(for species: Species) -> String? {
+        VaccineCatalog.info(name: vaccineType, species: species)?.description
+    }
+
+    var diseasesLabel: String? {
+        let diseases = diseaseCovered.filter { !$0.isEmpty }
+        guard !diseases.isEmpty else { return nil }
+        return diseases.joined(separator: ", ")
+    }
+
+    var vetClinicLabel: String? {
+        let parts = [vetName, clinicName, clinicLocation]
+            .compactMap { $0?.trimmingCharacters(in: .whitespaces) }
+            .filter { !$0.isEmpty }
+        return parts.isEmpty ? nil : parts.joined(separator: " · ")
+    }
+
     static let dayFormatter: DateFormatter = {
         let formatter = DateFormatter()
         formatter.dateFormat = "yyyy-MM-dd"
@@ -155,28 +194,66 @@ struct Vaccination: Codable, Identifiable, Hashable {
     }()
 
     enum CodingKeys: String, CodingKey {
-        case id
+        case id, notes
         case petId = "pet_id"
-        case vaccineName = "vaccine_name"
-        case vaccinationDate = "vaccination_date"
-        case protectionMonths = "protection_months"
+        case vaccineType = "vaccine_name"
+        case diseaseCovered = "disease_covered"
+        case dateGiven = "vaccination_date"
+        case protectionDurationMonths = "protection_months"
+        case vetName = "vet_name"
+        case clinicName = "clinic_name"
+        case clinicLocation = "clinic_location"
+        case batchNumber = "batch_number"
         case reminderEnabled = "reminder_enabled"
     }
 }
 
 struct VaccinationPayload: Codable {
     var petId: UUID
-    var vaccineName: String
-    var vaccinationDate: String   // "yyyy-MM-dd"
-    var protectionMonths: Int
+    var vaccineType: String
+    var diseaseCovered: [String]
+    var dateGiven: String   // "yyyy-MM-dd"
+    var protectionDurationMonths: Int
+    var vetName: String?
+    var clinicName: String?
+    var clinicLocation: String?
+    var batchNumber: String?
+    var notes: String?
     var reminderEnabled: Bool
 
     enum CodingKeys: String, CodingKey {
+        case notes
         case petId = "pet_id"
-        case vaccineName = "vaccine_name"
-        case vaccinationDate = "vaccination_date"
-        case protectionMonths = "protection_months"
+        case vaccineType = "vaccine_name"
+        case diseaseCovered = "disease_covered"
+        case dateGiven = "vaccination_date"
+        case protectionDurationMonths = "protection_months"
+        case vetName = "vet_name"
+        case clinicName = "clinic_name"
+        case clinicLocation = "clinic_location"
+        case batchNumber = "batch_number"
         case reminderEnabled = "reminder_enabled"
+    }
+
+    init(from form: VaccinationFormData, petId: UUID) {
+        self.petId = petId
+        vaccineType = form.vaccineType
+        diseaseCovered = form.diseaseCovered
+        dateGiven = Vaccination.dayFormatter.string(from: form.dateGiven)
+        protectionDurationMonths = form.protectionDurationMonths
+        vetName = form.vetName.nilIfBlank
+        clinicName = form.clinicName.nilIfBlank
+        clinicLocation = form.clinicLocation.nilIfBlank
+        batchNumber = form.batchNumber.nilIfBlank
+        notes = form.notes.nilIfBlank
+        reminderEnabled = form.reminderEnabled
+    }
+}
+
+extension String {
+    var nilIfBlank: String? {
+        let trimmed = trimmingCharacters(in: .whitespaces)
+        return trimmed.isEmpty ? nil : trimmed
     }
 }
 

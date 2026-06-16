@@ -45,25 +45,16 @@ struct PetFormView: View {
         .sheet(item: $vaccineSheet) { mode in
             switch mode {
             case .add:
-                VaccineFormView(species: viewModel.species, existing: nil) { name, date, months, reminder in
+                VaccineFormView(species: viewModel.species, existing: nil) { form in
                     if viewModel.isEditing {
-                        await viewModel.saveVaccination(
-                            existing: nil, vaccineName: name, date: date,
-                            protectionMonths: months, reminderEnabled: reminder
-                        )
+                        await viewModel.saveVaccination(existing: nil, form: form)
                     } else {
-                        viewModel.addPendingVaccination(
-                            name: name, date: date,
-                            protectionMonths: months, reminderEnabled: reminder
-                        )
+                        viewModel.addPendingVaccination(form: form)
                     }
                 }
             case .edit(let vaccination):
-                VaccineFormView(species: viewModel.species, existing: vaccination) { name, date, months, reminder in
-                    await viewModel.saveVaccination(
-                        existing: vaccination, vaccineName: name, date: date,
-                        protectionMonths: months, reminderEnabled: reminder
-                    )
+                VaccineFormView(species: viewModel.species, existing: vaccination) { form in
+                    await viewModel.saveVaccination(existing: vaccination, form: form)
                 }
             }
         }
@@ -211,7 +202,7 @@ struct PetFormView: View {
                     Button {
                         vaccineSheet = .edit(vaccination)
                     } label: {
-                        VaccinationRow(vaccination: vaccination)
+                        VaccinationRow(species: viewModel.species, vaccination: vaccination)
                     }
                     .buttonStyle(.plain)
                     .swipeActions {
@@ -222,7 +213,7 @@ struct PetFormView: View {
                 }
             } else {
                 ForEach(viewModel.pendingVaccinations) { pending in
-                    VaccinationRow(vaccination: pending.displayRow)
+                    VaccinationRow(species: viewModel.species, vaccination: pending.displayRow)
                         .swipeActions {
                             Button("Delete", role: .destructive) {
                                 viewModel.removePendingVaccination(pending)
