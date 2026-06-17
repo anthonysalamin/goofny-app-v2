@@ -7477,7 +7477,7 @@
     {
       "type": "frame",
       "id": "MEfam",
-      "x": 0,
+      "x": -493,
       "y": 1600,
       "name": "06 Home Feed",
       "clip": true,
@@ -7561,255 +7561,6 @@
                       "fontFamily": "$font-body",
                       "fontSize": 15,
                       "fontWeight": "normal"
-                    }
-                  ]
-                }
-              ]
-            },
-            {
-              "type": "group",
-              "id": "ibpLq",
-              "layout": "vertical",
-              "gap": 20,
-              "children": [
-                {
-                  "type": "frame",
-                  "id": "k9gjO",
-                  "name": "TrendingHead",
-                  "width": "fill_container",
-                  "justifyContent": "space_between",
-                  "alignItems": "center",
-                  "children": [
-                    {
-                      "type": "text",
-                      "id": "Je6cj",
-                      "name": "H",
-                      "fill": "$foreground-primary",
-                      "content": "🔥 Trending today",
-                      "fontFamily": "$font-body",
-                      "fontSize": 17,
-                      "fontWeight": "700"
-                    }
-                  ]
-                },
-                {
-                  "type": "group",
-                  "id": "UHrt7",
-                  "layout": "vertical",
-                  "gap": 20,
-                  "children": [
-                    {
-                      "type": "frame",
-                      "id": "Izfri",
-                      "name": "TrendingRow",
-                      "width": "fill_container",
-                      "gap": 12,
-                      "children": [
-                        {
-                          "type": "frame",
-                          "id": "kxeMe",
-                          "name": "Luna",
-                          "clip": true,
-                          "width": "fill_container",
-                          "fill": "$surface-card",
-                          "cornerRadius": "$radius-xl",
-                          "layout": "vertical",
-                          "gap": 8,
-                          "children": [
-                            {
-                              "type": "rectangle",
-                              "id": "A1Bt6",
-                              "name": "Img",
-                              "metadata": {
-                                "type": "unsplash",
-                                "username": "barcstamaas",
-                                "link": "https://unsplash.com/@barcstamaas",
-                                "author": "Barcs Tamás"
-                              },
-                              "fill": {
-                                "type": "image",
-                                "enabled": true,
-                                "url": "kongress-original.png",
-                                "mode": "fill"
-                              },
-                              "width": "fill_container",
-                              "height": 120
-                            },
-                            {
-                              "type": "frame",
-                              "id": "CMXeM",
-                              "name": "Info",
-                              "width": "fill_container",
-                              "layout": "vertical",
-                              "gap": 2,
-                              "padding": [
-                                6,
-                                10,
-                                10,
-                                10
-                              ],
-                              "children": [
-                                {
-                                  "type": "text",
-                                  "id": "g7Fxl",
-                                  "name": "Name",
-                                  "rotation": 0.29666489276134006,
-                                  "fill": "$foreground-primary",
-                                  "content": "Kongress",
-                                  "fontFamily": "$font-body",
-                                  "fontSize": 14,
-                                  "fontWeight": "700"
-                                },
-                                {
-                                  "type": "text",
-                                  "id": "MJvXe",
-                                  "name": "Votes",
-                                  "fill": "$foreground-muted",
-                                  "content": "3,481 votes",
-                                  "fontFamily": "$font-caption",
-                                  "fontSize": 12,
-                                  "fontWeight": "normal"
-                                }
-                              ]
-                            }
-                          ]
-                        },
-                        {
-                          "type": "frame",
-                          "id": "O8mrQ",
-                          "name": "Rex",
-                          "clip": true,
-                          "width": "fill_container",
-                          "fill": "$surface-card",
-                          "cornerRadius": "$radius-xl",
-                          "layout": "vertical",
-                          "gap": 8,
-                          "children": [
-                            {
-                              "type": "rectangle",
-                              "id": "YtGJt",
-                              "name": "Img",
-                              "metadata": {
-                                "type": "unsplash",
-                                "username": "haberdoedas",
-                                "link": "https://unsplash.com/@haberdoedas",
-                                "author": "Haberdoedas"
-                              },
-                              "fill": {
-                                "type": "image",
-                                "enabled": true,
-                                "url": "doggie_007.jpeg",
-                                "mode": "fill"
-                              },
-                              "width": "fill_container",
-                              "height": 120
-                            },
-                            {
-                              "type": "frame",
-                              "id": "y2yFCD",
-                              "name": "Info",
-                              "width": "fill_container",
-                              "layout": "vertical",
-                              "gap": 2,
-                              "padding": [
-                                6,
-                                10,
-                                10,
-                                10
-                              ],
-                              "children": [
-                                {
-                                  "type": "text",
-                                  "id": "Scf6T",
-                                  "name": "Name",
-                                  "fill": "$foreground-primary",
-                                  "content": "Chica",
-                                  "fontFamily": "$font-body",
-                                  "fontSize": 14,
-                                  "fontWeight": "700"
-                                },
-                                {
-                                  "type": "text",
-                                  "id": "SDew3",
-                                  "name": "Votes",
-                                  "fill": "$foreground-muted",
-                                  "content": "2,103 votes",
-                                  "fontFamily": "$font-caption",
-                                  "fontSize": 12,
-                                  "fontWeight": "normal"
-                                }
-                              ]
-                            }
-                          ]
-                        },
-                        {
-                          "type": "frame",
-                          "id": "nCulN",
-                          "name": "Mochi",
-                          "width": "fill_container",
-                          "fill": "$surface-card",
-                          "cornerRadius": "$radius-xl",
-                          "layout": "vertical",
-                          "gap": 8,
-                          "children": [
-                            {
-                              "type": "rectangle",
-                              "id": "HUph4",
-                              "name": "Img",
-                              "metadata": {
-                                "type": "unsplash",
-                                "username": "leonsa",
-                                "link": "https://unsplash.com/@leonsa",
-                                "author": "Leonsa"
-                              },
-                              "fill": {
-                                "type": "image",
-                                "enabled": true,
-                                "url": "doggie_002.jpeg",
-                                "mode": "fill"
-                              },
-                              "width": "fill_container",
-                              "height": 120
-                            },
-                            {
-                              "type": "frame",
-                              "id": "RrUDT",
-                              "name": "Info",
-                              "width": "fill_container",
-                              "layout": "vertical",
-                              "gap": 2,
-                              "padding": [
-                                6,
-                                10,
-                                10,
-                                10
-                              ],
-                              "children": [
-                                {
-                                  "type": "text",
-                                  "id": "HaKwn",
-                                  "name": "Name",
-                                  "fill": "$foreground-primary",
-                                  "content": "Mochi",
-                                  "fontFamily": "$font-body",
-                                  "fontSize": 14,
-                                  "fontWeight": "700"
-                                },
-                                {
-                                  "type": "text",
-                                  "id": "xSLX1",
-                                  "name": "Votes",
-                                  "fill": "$foreground-muted",
-                                  "content": "1,890 votes",
-                                  "fontFamily": "$font-caption",
-                                  "fontSize": 12,
-                                  "fontWeight": "normal"
-                                }
-                              ]
-                            }
-                          ]
-                        }
-                      ]
                     }
                   ]
                 }
@@ -8734,245 +8485,610 @@
       ]
     },
     {
-      "type": "group",
-      "id": "w00mVj",
-      "x": -725,
+      "type": "frame",
+      "id": "Ow7kz",
+      "x": 0,
       "y": 1600,
+      "name": "06 Home Feed",
+      "clip": true,
+      "width": 393,
+      "height": 1496,
+      "fill": "$surface-primary",
       "layout": "vertical",
-      "gap": 20,
       "children": [
         {
-          "type": "frame",
-          "id": "bODvg",
-          "name": "TrendingHead",
-          "width": "fill_container",
-          "justifyContent": "space_between",
-          "alignItems": "center",
-          "children": [
-            {
-              "type": "text",
-              "id": "NcuVk",
-              "name": "H",
-              "fill": "$foreground-primary",
-              "content": "All Goofnies",
-              "fontFamily": "$font-body",
-              "fontSize": 17,
-              "fontWeight": "700"
-            }
-          ]
+          "id": "pif4S",
+          "type": "ref",
+          "ref": "YYKAV",
+          "name": "StatusBar",
+          "width": "fill_container"
         },
         {
-          "type": "group",
-          "id": "o287un",
+          "type": "frame",
+          "id": "x1lUP",
+          "name": "Content",
+          "width": "fill_container",
+          "height": "fill_container",
           "layout": "vertical",
           "gap": 20,
+          "padding": [
+            6,
+            16,
+            12,
+            16
+          ],
           "children": [
             {
               "type": "frame",
-              "id": "UzY7A",
-              "name": "TrendingRow",
+              "id": "Q043Q0",
+              "name": "Header",
               "width": "fill_container",
+              "layout": "vertical",
               "gap": 12,
               "children": [
                 {
+                  "type": "text",
+                  "id": "dz6zg",
+                  "name": "Title",
+                  "fill": "$foreground-primary",
+                  "content": "Discover",
+                  "fontFamily": "$font-heading",
+                  "fontSize": 30,
+                  "fontWeight": "700"
+                },
+                {
                   "type": "frame",
-                  "id": "Slq1P",
-                  "name": "Luna",
-                  "clip": true,
+                  "id": "vRNEH",
+                  "name": "SearchBar",
+                  "width": "fill_container",
+                  "fill": "$surface-card",
+                  "cornerRadius": "$radius-full",
+                  "stroke": "$border-subtle",
+                  "strokeWidth": 1,
+                  "gap": 10,
+                  "padding": [
+                    12,
+                    16
+                  ],
+                  "alignItems": "center",
+                  "children": [
+                    {
+                      "type": "icon",
+                      "id": "SuoQT",
+                      "name": "Icon",
+                      "width": 20,
+                      "height": 20,
+                      "icon": "search",
+                      "library": "lucide",
+                      "fill": "$foreground-muted"
+                    },
+                    {
+                      "type": "text",
+                      "id": "Rls6y",
+                      "name": "Placeholder",
+                      "fill": "$foreground-muted",
+                      "content": "Search pets, countries",
+                      "fontFamily": "$font-body",
+                      "fontSize": 15,
+                      "fontWeight": "normal"
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "type": "group",
+              "id": "q8FKf",
+              "layout": "vertical",
+              "gap": 20,
+              "children": [
+                {
+                  "type": "frame",
+                  "id": "Ex5yB",
+                  "name": "TrendingHead",
+                  "width": "fill_container",
+                  "justifyContent": "space_between",
+                  "alignItems": "center",
+                  "children": [
+                    {
+                      "type": "text",
+                      "id": "rCYLr",
+                      "name": "H",
+                      "fill": "$foreground-primary",
+                      "content": "🔥 Trending today",
+                      "fontFamily": "$font-body",
+                      "fontSize": 17,
+                      "fontWeight": "700"
+                    }
+                  ]
+                },
+                {
+                  "type": "group",
+                  "id": "TR0Oh",
+                  "layout": "vertical",
+                  "gap": 20,
+                  "children": [
+                    {
+                      "type": "frame",
+                      "id": "jQ4pw",
+                      "name": "TrendingRow",
+                      "width": "fill_container",
+                      "gap": 12,
+                      "children": [
+                        {
+                          "type": "frame",
+                          "id": "d1Bkm",
+                          "name": "Luna",
+                          "clip": true,
+                          "width": "fill_container",
+                          "fill": "$surface-card",
+                          "cornerRadius": "$radius-xl",
+                          "layout": "vertical",
+                          "gap": 8,
+                          "children": [
+                            {
+                              "type": "rectangle",
+                              "id": "q536o",
+                              "name": "Img",
+                              "metadata": {
+                                "type": "unsplash",
+                                "username": "barcstamaas",
+                                "link": "https://unsplash.com/@barcstamaas",
+                                "author": "Barcs Tamás"
+                              },
+                              "fill": {
+                                "type": "image",
+                                "enabled": true,
+                                "url": "kongress-original.png",
+                                "mode": "fill"
+                              },
+                              "width": "fill_container",
+                              "height": 120
+                            },
+                            {
+                              "type": "frame",
+                              "id": "LYbcx",
+                              "name": "Info",
+                              "width": "fill_container",
+                              "layout": "vertical",
+                              "gap": 2,
+                              "padding": [
+                                6,
+                                10,
+                                10,
+                                10
+                              ],
+                              "children": [
+                                {
+                                  "type": "text",
+                                  "id": "U4MbLM",
+                                  "name": "Name",
+                                  "rotation": 0.29666489276134006,
+                                  "fill": "$foreground-primary",
+                                  "content": "Kongress",
+                                  "fontFamily": "$font-body",
+                                  "fontSize": 14,
+                                  "fontWeight": "700"
+                                },
+                                {
+                                  "type": "text",
+                                  "id": "OFHuJ",
+                                  "name": "Votes",
+                                  "fill": "$foreground-muted",
+                                  "content": "3,481 votes",
+                                  "fontFamily": "$font-caption",
+                                  "fontSize": 12,
+                                  "fontWeight": "normal"
+                                }
+                              ]
+                            }
+                          ]
+                        },
+                        {
+                          "type": "frame",
+                          "id": "q0V3xA",
+                          "name": "Rex",
+                          "clip": true,
+                          "width": "fill_container",
+                          "fill": "$surface-card",
+                          "cornerRadius": "$radius-xl",
+                          "layout": "vertical",
+                          "gap": 8,
+                          "children": [
+                            {
+                              "type": "rectangle",
+                              "id": "LgoJm",
+                              "name": "Img",
+                              "metadata": {
+                                "type": "unsplash",
+                                "username": "haberdoedas",
+                                "link": "https://unsplash.com/@haberdoedas",
+                                "author": "Haberdoedas"
+                              },
+                              "fill": {
+                                "type": "image",
+                                "enabled": true,
+                                "url": "doggie_007.jpeg",
+                                "mode": "fill"
+                              },
+                              "width": "fill_container",
+                              "height": 120
+                            },
+                            {
+                              "type": "frame",
+                              "id": "KkVd2",
+                              "name": "Info",
+                              "width": "fill_container",
+                              "layout": "vertical",
+                              "gap": 2,
+                              "padding": [
+                                6,
+                                10,
+                                10,
+                                10
+                              ],
+                              "children": [
+                                {
+                                  "type": "text",
+                                  "id": "pTCjw",
+                                  "name": "Name",
+                                  "fill": "$foreground-primary",
+                                  "content": "Chica",
+                                  "fontFamily": "$font-body",
+                                  "fontSize": 14,
+                                  "fontWeight": "700"
+                                },
+                                {
+                                  "type": "text",
+                                  "id": "Nidd9",
+                                  "name": "Votes",
+                                  "fill": "$foreground-muted",
+                                  "content": "2,103 votes",
+                                  "fontFamily": "$font-caption",
+                                  "fontSize": 12,
+                                  "fontWeight": "normal"
+                                }
+                              ]
+                            }
+                          ]
+                        },
+                        {
+                          "type": "frame",
+                          "id": "AZt7u",
+                          "name": "Mochi",
+                          "width": "fill_container",
+                          "fill": "$surface-card",
+                          "cornerRadius": "$radius-xl",
+                          "layout": "vertical",
+                          "gap": 8,
+                          "children": [
+                            {
+                              "type": "rectangle",
+                              "id": "nDXyV",
+                              "name": "Img",
+                              "metadata": {
+                                "type": "unsplash",
+                                "username": "leonsa",
+                                "link": "https://unsplash.com/@leonsa",
+                                "author": "Leonsa"
+                              },
+                              "fill": {
+                                "type": "image",
+                                "enabled": true,
+                                "url": "doggie_002.jpeg",
+                                "mode": "fill"
+                              },
+                              "width": "fill_container",
+                              "height": 120
+                            },
+                            {
+                              "type": "frame",
+                              "id": "QDnXq",
+                              "name": "Info",
+                              "width": "fill_container",
+                              "layout": "vertical",
+                              "gap": 2,
+                              "padding": [
+                                6,
+                                10,
+                                10,
+                                10
+                              ],
+                              "children": [
+                                {
+                                  "type": "text",
+                                  "id": "gN4hA",
+                                  "name": "Name",
+                                  "fill": "$foreground-primary",
+                                  "content": "Mochi",
+                                  "fontFamily": "$font-body",
+                                  "fontSize": 14,
+                                  "fontWeight": "700"
+                                },
+                                {
+                                  "type": "text",
+                                  "id": "TzmOv",
+                                  "name": "Votes",
+                                  "fill": "$foreground-muted",
+                                  "content": "1,890 votes",
+                                  "fontFamily": "$font-caption",
+                                  "fontSize": 12,
+                                  "fontWeight": "normal"
+                                }
+                              ]
+                            }
+                          ]
+                        }
+                      ]
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "type": "text",
+              "id": "WgGB1",
+              "name": "RisingHead",
+              "fill": "$foreground-primary",
+              "content": "⭐ Rising stars",
+              "fontFamily": "$font-body",
+              "fontSize": 17,
+              "fontWeight": "700"
+            },
+            {
+              "type": "frame",
+              "id": "dDBlJ",
+              "name": "RisingList",
+              "width": "fill_container",
+              "layout": "vertical",
+              "gap": 10,
+              "children": [
+                {
+                  "type": "frame",
+                  "id": "pfbbW",
+                  "name": "Pepper",
                   "width": "fill_container",
                   "fill": "$surface-card",
                   "cornerRadius": "$radius-xl",
-                  "layout": "vertical",
-                  "gap": 8,
+                  "gap": 12,
+                  "padding": 10,
+                  "alignItems": "center",
                   "children": [
                     {
                       "type": "rectangle",
-                      "id": "IeaYi",
+                      "cornerRadius": "$radius-lg",
+                      "id": "j9doQm",
                       "name": "Img",
                       "metadata": {
                         "type": "unsplash",
-                        "username": "barcstamaas",
-                        "link": "https://unsplash.com/@barcstamaas",
-                        "author": "Barcs Tamás"
+                        "username": "zaidi_14",
+                        "link": "https://unsplash.com/@zaidi_14",
+                        "author": "Syed Muhammad Baqir Zaidi"
                       },
                       "fill": {
                         "type": "image",
                         "enabled": true,
-                        "url": "kongress-original.png",
+                        "url": "20201224_191256.jpg",
                         "mode": "fill"
                       },
-                      "width": "fill_container",
-                      "height": 120
+                      "width": 52,
+                      "height": 52
                     },
                     {
                       "type": "frame",
-                      "id": "NlGES",
-                      "name": "Info",
+                      "id": "GsAT2",
+                      "name": "Text",
                       "width": "fill_container",
                       "layout": "vertical",
-                      "gap": 2,
-                      "padding": [
-                        6,
-                        10,
-                        10,
-                        10
-                      ],
+                      "gap": 3,
                       "children": [
                         {
                           "type": "text",
-                          "id": "L3sK4V",
+                          "id": "mBsx0",
                           "name": "Name",
-                          "rotation": 0.29666489276134006,
                           "fill": "$foreground-primary",
-                          "content": "Kongress",
+                          "content": "Bonnie",
                           "fontFamily": "$font-body",
-                          "fontSize": 14,
+                          "fontSize": 15,
                           "fontWeight": "700"
                         },
                         {
                           "type": "text",
-                          "id": "HYg3n",
-                          "name": "Votes",
+                          "id": "zMS3x",
+                          "name": "Breed",
                           "fill": "$foreground-muted",
-                          "content": "3,481 votes",
+                          "content": "Boxer · 🇨🇭",
                           "fontFamily": "$font-caption",
                           "fontSize": 12,
                           "fontWeight": "normal"
                         }
                       ]
+                    },
+                    {
+                      "type": "text",
+                      "id": "WB7KX",
+                      "name": "Trend",
+                      "fill": "$success",
+                      "content": "+412 today",
+                      "fontFamily": "$font-caption",
+                      "fontSize": 12,
+                      "fontWeight": "600"
                     }
                   ]
                 },
                 {
                   "type": "frame",
-                  "id": "aWbAD",
-                  "name": "Rex",
-                  "clip": true,
+                  "id": "dsy60",
+                  "name": "Bandit",
                   "width": "fill_container",
                   "fill": "$surface-card",
                   "cornerRadius": "$radius-xl",
-                  "layout": "vertical",
-                  "gap": 8,
+                  "gap": 12,
+                  "padding": 10,
+                  "alignItems": "center",
                   "children": [
                     {
                       "type": "rectangle",
-                      "id": "kHfjL",
+                      "cornerRadius": "$radius-lg",
+                      "id": "xbwOW",
                       "name": "Img",
                       "metadata": {
                         "type": "unsplash",
-                        "username": "haberdoedas",
-                        "link": "https://unsplash.com/@haberdoedas",
-                        "author": "Haberdoedas"
+                        "username": "horvathdavid",
+                        "link": "https://unsplash.com/@horvathdavid",
+                        "author": "Dávid Horváth"
                       },
                       "fill": {
                         "type": "image",
                         "enabled": true,
-                        "url": "doggie_007.jpeg",
+                        "url": "doggie_001.jpeg",
                         "mode": "fill"
                       },
-                      "width": "fill_container",
-                      "height": 120
+                      "width": 52,
+                      "height": 52
                     },
                     {
                       "type": "frame",
-                      "id": "XhKdg",
-                      "name": "Info",
+                      "id": "V5uHp",
+                      "name": "Text",
                       "width": "fill_container",
                       "layout": "vertical",
-                      "gap": 2,
-                      "padding": [
-                        6,
-                        10,
-                        10,
-                        10
-                      ],
+                      "gap": 3,
                       "children": [
                         {
                           "type": "text",
-                          "id": "C8mcvC",
+                          "id": "sKsAB",
                           "name": "Name",
                           "fill": "$foreground-primary",
-                          "content": "Chica",
+                          "content": "Bandit",
                           "fontFamily": "$font-body",
-                          "fontSize": 14,
+                          "fontSize": 15,
                           "fontWeight": "700"
                         },
                         {
                           "type": "text",
-                          "id": "X8mGuC",
-                          "name": "Votes",
+                          "id": "g7jFM",
+                          "name": "Breed",
                           "fill": "$foreground-muted",
-                          "content": "2,103 votes",
+                          "content": "Husky · 🇵🇭",
                           "fontFamily": "$font-caption",
                           "fontSize": 12,
                           "fontWeight": "normal"
                         }
                       ]
+                    },
+                    {
+                      "type": "text",
+                      "id": "pM5ru",
+                      "name": "Trend",
+                      "fill": "$success",
+                      "content": "+388 today",
+                      "fontFamily": "$font-caption",
+                      "fontSize": 12,
+                      "fontWeight": "600"
                     }
                   ]
+                }
+              ]
+            },
+            {
+              "type": "group",
+              "id": "nM6lc",
+              "layout": "vertical",
+              "gap": 20,
+              "children": [
+                {
+                  "type": "text",
+                  "id": "W8saQ",
+                  "name": "BrowseHead",
+                  "fill": "$foreground-primary",
+                  "content": "Browse by breed",
+                  "fontFamily": "$font-body",
+                  "fontSize": 17,
+                  "fontWeight": "700"
                 },
                 {
                   "type": "frame",
-                  "id": "HU61p",
-                  "name": "Mochi",
+                  "id": "Y488c",
+                  "name": "BreedChips",
                   "width": "fill_container",
-                  "fill": "$surface-card",
-                  "cornerRadius": "$radius-xl",
-                  "layout": "vertical",
                   "gap": 8,
                   "children": [
                     {
-                      "type": "rectangle",
-                      "id": "Hx1ys",
-                      "name": "Img",
-                      "metadata": {
-                        "type": "unsplash",
-                        "username": "leonsa",
-                        "link": "https://unsplash.com/@leonsa",
-                        "author": "Leonsa"
-                      },
-                      "fill": {
-                        "type": "image",
-                        "enabled": true,
-                        "url": "doggie_002.jpeg",
-                        "mode": "fill"
-                      },
-                      "width": "fill_container",
-                      "height": 120
-                    },
-                    {
                       "type": "frame",
-                      "id": "LdwU0",
-                      "name": "Info",
-                      "width": "fill_container",
-                      "layout": "vertical",
-                      "gap": 2,
+                      "id": "xL9Wi",
+                      "name": "Dogs",
+                      "fill": "$foreground-primary",
+                      "cornerRadius": "$radius-full",
+                      "stroke": "#00000000",
+                      "strokeWidth": 1,
                       "padding": [
-                        6,
-                        10,
-                        10,
-                        10
+                        8,
+                        14
                       ],
+                      "alignItems": "center",
                       "children": [
                         {
                           "type": "text",
-                          "id": "enX54",
-                          "name": "Name",
-                          "fill": "$foreground-primary",
-                          "content": "Mochi",
-                          "fontFamily": "$font-body",
-                          "fontSize": 14,
-                          "fontWeight": "700"
-                        },
+                          "id": "wgWtl",
+                          "name": "Label",
+                          "fill": "$surface-primary",
+                          "content": "Retriever",
+                          "fontFamily": "$font-caption",
+                          "fontSize": 13,
+                          "fontWeight": "600"
+                        }
+                      ]
+                    },
+                    {
+                      "type": "frame",
+                      "id": "ANdaG",
+                      "name": "Cats",
+                      "fill": "$surface-card",
+                      "cornerRadius": "$radius-full",
+                      "stroke": "$border-subtle",
+                      "strokeWidth": 1,
+                      "padding": [
+                        8,
+                        14
+                      ],
+                      "alignItems": "center",
+                      "children": [
                         {
                           "type": "text",
-                          "id": "WXDSK",
-                          "name": "Votes",
-                          "fill": "$foreground-muted",
-                          "content": "1,890 votes",
+                          "id": "Gt1WD",
+                          "name": "Label",
+                          "fill": "$foreground-secondary",
+                          "content": "Bulldog",
                           "fontFamily": "$font-caption",
-                          "fontSize": 12,
-                          "fontWeight": "normal"
+                          "fontSize": 13,
+                          "fontWeight": "600"
+                        }
+                      ]
+                    },
+                    {
+                      "type": "frame",
+                      "id": "a79UKd",
+                      "name": "Cats",
+                      "fill": "$surface-card",
+                      "cornerRadius": "$radius-full",
+                      "stroke": "$border-subtle",
+                      "strokeWidth": 1,
+                      "padding": [
+                        8,
+                        14
+                      ],
+                      "alignItems": "center",
+                      "children": [
+                        {
+                          "type": "text",
+                          "id": "x1pBF",
+                          "name": "Label",
+                          "fill": "$foreground-secondary",
+                          "content": "St-Bernard",
+                          "fontFamily": "$font-caption",
+                          "fontSize": 13,
+                          "fontWeight": "600"
                         }
                       ]
                     }
@@ -8982,214 +9098,881 @@
             },
             {
               "type": "frame",
-              "id": "uTaXb",
-              "name": "TrendingRow",
+              "id": "n33lin",
+              "name": "Species",
               "width": "fill_container",
-              "gap": 12,
+              "layout": "vertical",
+              "gap": 7,
               "children": [
                 {
                   "type": "frame",
-                  "id": "CHBUi",
-                  "name": "Luna",
-                  "clip": true,
+                  "id": "NBzlC",
+                  "name": "Species",
                   "width": "fill_container",
-                  "fill": "$surface-card",
-                  "cornerRadius": "$radius-xl",
                   "layout": "vertical",
-                  "gap": 8,
+                  "gap": 7,
                   "children": [
                     {
-                      "type": "rectangle",
-                      "id": "EZYlC",
-                      "name": "Img",
-                      "metadata": {
-                        "type": "unsplash",
-                        "username": "barcstamaas",
-                        "link": "https://unsplash.com/@barcstamaas",
-                        "author": "Barcs Tamás"
-                      },
-                      "fill": {
-                        "type": "image",
-                        "enabled": true,
-                        "url": "kongress-original.png",
-                        "mode": "fill"
-                      },
-                      "width": "fill_container",
-                      "height": 120
+                      "type": "text",
+                      "id": "JZoZE",
+                      "name": "FieldLabel",
+                      "fill": "$foreground-muted",
+                      "content": "Filter by dog or a cat",
+                      "fontFamily": "$font-caption",
+                      "fontSize": 13,
+                      "fontWeight": "500"
                     },
                     {
                       "type": "frame",
-                      "id": "h9REsM",
-                      "name": "Info",
+                      "id": "oDiO2",
+                      "name": "Options",
                       "width": "fill_container",
-                      "layout": "vertical",
-                      "gap": 2,
-                      "padding": [
-                        6,
-                        10,
-                        10,
-                        10
-                      ],
+                      "gap": 12,
                       "children": [
                         {
-                          "type": "text",
-                          "id": "ca8PB",
-                          "name": "Name",
-                          "rotation": 0.29666489276134006,
-                          "fill": "$foreground-primary",
-                          "content": "Kongress",
-                          "fontFamily": "$font-body",
-                          "fontSize": 14,
-                          "fontWeight": "700"
+                          "type": "frame",
+                          "id": "YxWy9",
+                          "name": "Dog",
+                          "width": "fill_container",
+                          "fill": "$accent-primary-soft",
+                          "cornerRadius": "$radius-lg",
+                          "stroke": "$accent-primary",
+                          "strokeWidth": 1.5,
+                          "gap": 8,
+                          "padding": [
+                            14,
+                            0
+                          ],
+                          "justifyContent": "center",
+                          "alignItems": "center",
+                          "children": [
+                            {
+                              "type": "icon",
+                              "id": "A6YwM",
+                              "name": "Icon",
+                              "width": 22,
+                              "height": 22,
+                              "icon": "dog",
+                              "library": "lucide",
+                              "fill": "$accent-primary"
+                            },
+                            {
+                              "type": "text",
+                              "id": "pSo3K",
+                              "name": "Label",
+                              "fill": "$accent-primary",
+                              "content": "Dog",
+                              "fontFamily": "$font-body",
+                              "fontSize": 15,
+                              "fontWeight": "600"
+                            }
+                          ]
                         },
                         {
-                          "type": "text",
-                          "id": "JFMVL",
-                          "name": "Votes",
-                          "fill": "$foreground-muted",
-                          "content": "3,481 votes",
-                          "fontFamily": "$font-caption",
-                          "fontSize": 12,
-                          "fontWeight": "normal"
+                          "type": "frame",
+                          "id": "LD47m",
+                          "name": "Cat",
+                          "width": "fill_container",
+                          "fill": "$surface-card",
+                          "cornerRadius": "$radius-lg",
+                          "stroke": "$border-subtle",
+                          "strokeWidth": 1,
+                          "gap": 8,
+                          "padding": [
+                            14,
+                            0
+                          ],
+                          "justifyContent": "center",
+                          "alignItems": "center",
+                          "children": [
+                            {
+                              "type": "icon",
+                              "id": "cn0th",
+                              "name": "Icon",
+                              "width": 22,
+                              "height": 22,
+                              "icon": "cat",
+                              "library": "lucide",
+                              "fill": "$foreground-muted"
+                            },
+                            {
+                              "type": "text",
+                              "id": "BEiuM",
+                              "name": "Label",
+                              "fill": "$foreground-secondary",
+                              "content": "Cat",
+                              "fontFamily": "$font-body",
+                              "fontSize": 15,
+                              "fontWeight": "600"
+                            }
+                          ]
                         }
                       ]
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "type": "group",
+              "id": "uAD5j",
+              "layout": "vertical",
+              "gap": 20,
+              "children": [
+                {
+                  "type": "frame",
+                  "id": "V8m68L",
+                  "name": "TrendingHead",
+                  "width": "fill_container",
+                  "justifyContent": "space_between",
+                  "alignItems": "center",
+                  "children": [
+                    {
+                      "type": "text",
+                      "id": "nSrak",
+                      "name": "H",
+                      "fill": "$foreground-primary",
+                      "content": "All Goofnies",
+                      "fontFamily": "$font-body",
+                      "fontSize": 17,
+                      "fontWeight": "700"
                     }
                   ]
                 },
                 {
-                  "type": "frame",
-                  "id": "VK9Ll",
-                  "name": "Rex",
-                  "clip": true,
-                  "width": "fill_container",
-                  "fill": "$surface-card",
-                  "cornerRadius": "$radius-xl",
+                  "type": "group",
+                  "id": "Wi4AF",
                   "layout": "vertical",
-                  "gap": 8,
+                  "gap": 20,
                   "children": [
                     {
-                      "type": "rectangle",
-                      "id": "e74zjN",
-                      "name": "Img",
-                      "metadata": {
-                        "type": "unsplash",
-                        "username": "haberdoedas",
-                        "link": "https://unsplash.com/@haberdoedas",
-                        "author": "Haberdoedas"
-                      },
-                      "fill": {
-                        "type": "image",
-                        "enabled": true,
-                        "url": "doggie_007.jpeg",
-                        "mode": "fill"
-                      },
+                      "type": "frame",
+                      "id": "S1V8D",
+                      "name": "TrendingRow",
                       "width": "fill_container",
-                      "height": 120
+                      "gap": 12,
+                      "children": [
+                        {
+                          "type": "frame",
+                          "id": "v0QcX",
+                          "name": "Luna",
+                          "clip": true,
+                          "width": "fill_container",
+                          "fill": "$surface-card",
+                          "cornerRadius": "$radius-xl",
+                          "layout": "vertical",
+                          "gap": 8,
+                          "children": [
+                            {
+                              "type": "rectangle",
+                              "id": "ogYgd",
+                              "name": "Img",
+                              "metadata": {
+                                "type": "unsplash",
+                                "username": "barcstamaas",
+                                "link": "https://unsplash.com/@barcstamaas",
+                                "author": "Barcs Tamás"
+                              },
+                              "fill": {
+                                "type": "image",
+                                "enabled": true,
+                                "url": "kongress-original.png",
+                                "mode": "fill"
+                              },
+                              "width": "fill_container",
+                              "height": 120
+                            },
+                            {
+                              "type": "frame",
+                              "id": "m1WRq",
+                              "name": "Info",
+                              "width": "fill_container",
+                              "layout": "vertical",
+                              "gap": 2,
+                              "padding": [
+                                6,
+                                10,
+                                10,
+                                10
+                              ],
+                              "children": [
+                                {
+                                  "type": "text",
+                                  "id": "WuQtg",
+                                  "name": "Name",
+                                  "rotation": 0.29666489276134006,
+                                  "fill": "$foreground-primary",
+                                  "content": "Kongress",
+                                  "fontFamily": "$font-body",
+                                  "fontSize": 14,
+                                  "fontWeight": "700"
+                                },
+                                {
+                                  "type": "text",
+                                  "id": "bs1Gw",
+                                  "name": "Votes",
+                                  "fill": "$foreground-muted",
+                                  "content": "3,481 votes",
+                                  "fontFamily": "$font-caption",
+                                  "fontSize": 12,
+                                  "fontWeight": "normal"
+                                }
+                              ]
+                            }
+                          ]
+                        },
+                        {
+                          "type": "frame",
+                          "id": "s8aBam",
+                          "name": "Rex",
+                          "clip": true,
+                          "width": "fill_container",
+                          "fill": "$surface-card",
+                          "cornerRadius": "$radius-xl",
+                          "layout": "vertical",
+                          "gap": 8,
+                          "children": [
+                            {
+                              "type": "rectangle",
+                              "id": "G4K3I",
+                              "name": "Img",
+                              "metadata": {
+                                "type": "unsplash",
+                                "username": "haberdoedas",
+                                "link": "https://unsplash.com/@haberdoedas",
+                                "author": "Haberdoedas"
+                              },
+                              "fill": {
+                                "type": "image",
+                                "enabled": true,
+                                "url": "doggie_007.jpeg",
+                                "mode": "fill"
+                              },
+                              "width": "fill_container",
+                              "height": 120
+                            },
+                            {
+                              "type": "frame",
+                              "id": "F9vMoI",
+                              "name": "Info",
+                              "width": "fill_container",
+                              "layout": "vertical",
+                              "gap": 2,
+                              "padding": [
+                                6,
+                                10,
+                                10,
+                                10
+                              ],
+                              "children": [
+                                {
+                                  "type": "text",
+                                  "id": "ufPm1",
+                                  "name": "Name",
+                                  "fill": "$foreground-primary",
+                                  "content": "Chica",
+                                  "fontFamily": "$font-body",
+                                  "fontSize": 14,
+                                  "fontWeight": "700"
+                                },
+                                {
+                                  "type": "text",
+                                  "id": "tKnXR",
+                                  "name": "Votes",
+                                  "fill": "$foreground-muted",
+                                  "content": "2,103 votes",
+                                  "fontFamily": "$font-caption",
+                                  "fontSize": 12,
+                                  "fontWeight": "normal"
+                                }
+                              ]
+                            }
+                          ]
+                        },
+                        {
+                          "type": "frame",
+                          "id": "xhHHk",
+                          "name": "Mochi",
+                          "width": "fill_container",
+                          "fill": "$surface-card",
+                          "cornerRadius": "$radius-xl",
+                          "layout": "vertical",
+                          "gap": 8,
+                          "children": [
+                            {
+                              "type": "rectangle",
+                              "id": "x8U298",
+                              "name": "Img",
+                              "metadata": {
+                                "type": "unsplash",
+                                "username": "leonsa",
+                                "link": "https://unsplash.com/@leonsa",
+                                "author": "Leonsa"
+                              },
+                              "fill": {
+                                "type": "image",
+                                "enabled": true,
+                                "url": "doggie_002.jpeg",
+                                "mode": "fill"
+                              },
+                              "width": "fill_container",
+                              "height": 120
+                            },
+                            {
+                              "type": "frame",
+                              "id": "C2pzHI",
+                              "name": "Info",
+                              "width": "fill_container",
+                              "layout": "vertical",
+                              "gap": 2,
+                              "padding": [
+                                6,
+                                10,
+                                10,
+                                10
+                              ],
+                              "children": [
+                                {
+                                  "type": "text",
+                                  "id": "E307iN",
+                                  "name": "Name",
+                                  "fill": "$foreground-primary",
+                                  "content": "Mochi",
+                                  "fontFamily": "$font-body",
+                                  "fontSize": 14,
+                                  "fontWeight": "700"
+                                },
+                                {
+                                  "type": "text",
+                                  "id": "QPBZ8",
+                                  "name": "Votes",
+                                  "fill": "$foreground-muted",
+                                  "content": "1,890 votes",
+                                  "fontFamily": "$font-caption",
+                                  "fontSize": 12,
+                                  "fontWeight": "normal"
+                                }
+                              ]
+                            }
+                          ]
+                        }
+                      ]
                     },
                     {
                       "type": "frame",
-                      "id": "BfEJj",
-                      "name": "Info",
+                      "id": "F80Mb6",
+                      "name": "TrendingRow",
                       "width": "fill_container",
-                      "layout": "vertical",
-                      "gap": 2,
-                      "padding": [
-                        6,
-                        10,
-                        10,
-                        10
-                      ],
+                      "gap": 12,
                       "children": [
                         {
-                          "type": "text",
-                          "id": "nGsGu",
-                          "name": "Name",
-                          "fill": "$foreground-primary",
-                          "content": "Chica",
-                          "fontFamily": "$font-body",
-                          "fontSize": 14,
-                          "fontWeight": "700"
+                          "type": "frame",
+                          "id": "KLbDZ",
+                          "name": "Luna",
+                          "clip": true,
+                          "width": "fill_container",
+                          "fill": "$surface-card",
+                          "cornerRadius": "$radius-xl",
+                          "layout": "vertical",
+                          "gap": 8,
+                          "children": [
+                            {
+                              "type": "rectangle",
+                              "id": "Kfdu2",
+                              "name": "Img",
+                              "metadata": {
+                                "type": "unsplash",
+                                "username": "barcstamaas",
+                                "link": "https://unsplash.com/@barcstamaas",
+                                "author": "Barcs Tamás"
+                              },
+                              "fill": {
+                                "type": "image",
+                                "enabled": true,
+                                "url": "kongress-original.png",
+                                "mode": "fill"
+                              },
+                              "width": "fill_container",
+                              "height": 120
+                            },
+                            {
+                              "type": "frame",
+                              "id": "AyasY",
+                              "name": "Info",
+                              "width": "fill_container",
+                              "layout": "vertical",
+                              "gap": 2,
+                              "padding": [
+                                6,
+                                10,
+                                10,
+                                10
+                              ],
+                              "children": [
+                                {
+                                  "type": "text",
+                                  "id": "jIW0h",
+                                  "name": "Name",
+                                  "rotation": 0.29666489276134006,
+                                  "fill": "$foreground-primary",
+                                  "content": "Kongress",
+                                  "fontFamily": "$font-body",
+                                  "fontSize": 14,
+                                  "fontWeight": "700"
+                                },
+                                {
+                                  "type": "text",
+                                  "id": "eT0Al",
+                                  "name": "Votes",
+                                  "fill": "$foreground-muted",
+                                  "content": "3,481 votes",
+                                  "fontFamily": "$font-caption",
+                                  "fontSize": 12,
+                                  "fontWeight": "normal"
+                                }
+                              ]
+                            }
+                          ]
                         },
                         {
-                          "type": "text",
-                          "id": "OjN3F",
-                          "name": "Votes",
-                          "fill": "$foreground-muted",
-                          "content": "2,103 votes",
-                          "fontFamily": "$font-caption",
-                          "fontSize": 12,
-                          "fontWeight": "normal"
+                          "type": "frame",
+                          "id": "K4wLcW",
+                          "name": "Rex",
+                          "clip": true,
+                          "width": "fill_container",
+                          "fill": "$surface-card",
+                          "cornerRadius": "$radius-xl",
+                          "layout": "vertical",
+                          "gap": 8,
+                          "children": [
+                            {
+                              "type": "rectangle",
+                              "id": "aZG9R",
+                              "name": "Img",
+                              "metadata": {
+                                "type": "unsplash",
+                                "username": "haberdoedas",
+                                "link": "https://unsplash.com/@haberdoedas",
+                                "author": "Haberdoedas"
+                              },
+                              "fill": {
+                                "type": "image",
+                                "enabled": true,
+                                "url": "doggie_007.jpeg",
+                                "mode": "fill"
+                              },
+                              "width": "fill_container",
+                              "height": 120
+                            },
+                            {
+                              "type": "frame",
+                              "id": "p4Cadv",
+                              "name": "Info",
+                              "width": "fill_container",
+                              "layout": "vertical",
+                              "gap": 2,
+                              "padding": [
+                                6,
+                                10,
+                                10,
+                                10
+                              ],
+                              "children": [
+                                {
+                                  "type": "text",
+                                  "id": "l6QTet",
+                                  "name": "Name",
+                                  "fill": "$foreground-primary",
+                                  "content": "Chica",
+                                  "fontFamily": "$font-body",
+                                  "fontSize": 14,
+                                  "fontWeight": "700"
+                                },
+                                {
+                                  "type": "text",
+                                  "id": "m088Q3",
+                                  "name": "Votes",
+                                  "fill": "$foreground-muted",
+                                  "content": "2,103 votes",
+                                  "fontFamily": "$font-caption",
+                                  "fontSize": 12,
+                                  "fontWeight": "normal"
+                                }
+                              ]
+                            }
+                          ]
+                        },
+                        {
+                          "type": "frame",
+                          "id": "cn4ro",
+                          "name": "Mochi",
+                          "width": "fill_container",
+                          "fill": "$surface-card",
+                          "cornerRadius": "$radius-xl",
+                          "layout": "vertical",
+                          "gap": 8,
+                          "children": [
+                            {
+                              "type": "rectangle",
+                              "id": "dMGE1",
+                              "name": "Img",
+                              "metadata": {
+                                "type": "unsplash",
+                                "username": "leonsa",
+                                "link": "https://unsplash.com/@leonsa",
+                                "author": "Leonsa"
+                              },
+                              "fill": {
+                                "type": "image",
+                                "enabled": true,
+                                "url": "doggie_002.jpeg",
+                                "mode": "fill"
+                              },
+                              "width": "fill_container",
+                              "height": 120
+                            },
+                            {
+                              "type": "frame",
+                              "id": "Z9Z8o",
+                              "name": "Info",
+                              "width": "fill_container",
+                              "layout": "vertical",
+                              "gap": 2,
+                              "padding": [
+                                6,
+                                10,
+                                10,
+                                10
+                              ],
+                              "children": [
+                                {
+                                  "type": "text",
+                                  "id": "cD3WJ",
+                                  "name": "Name",
+                                  "fill": "$foreground-primary",
+                                  "content": "Mochi",
+                                  "fontFamily": "$font-body",
+                                  "fontSize": 14,
+                                  "fontWeight": "700"
+                                },
+                                {
+                                  "type": "text",
+                                  "id": "EreiV",
+                                  "name": "Votes",
+                                  "fill": "$foreground-muted",
+                                  "content": "1,890 votes",
+                                  "fontFamily": "$font-caption",
+                                  "fontSize": 12,
+                                  "fontWeight": "normal"
+                                }
+                              ]
+                            }
+                          ]
                         }
                       ]
                     }
                   ]
+                }
+              ]
+            },
+            {
+              "type": "frame",
+              "id": "p7X5Ay",
+              "name": "CTAs",
+              "width": "fill_container",
+              "layout": "vertical",
+              "gap": 12,
+              "children": [
+                {
+                  "id": "bMVus",
+                  "type": "ref",
+                  "ref": "Iuq7a",
+                  "name": "Rankings",
+                  "width": "fill_container",
+                  "descendants": {
+                    "oFNog": {
+                      "content": "Load more Goofnies"
+                    }
+                  }
                 },
                 {
                   "type": "frame",
-                  "id": "ACqQA",
-                  "name": "Mochi",
+                  "id": "E4Kgf",
+                  "name": "Share",
                   "width": "fill_container",
-                  "fill": "$surface-card",
-                  "cornerRadius": "$radius-xl",
-                  "layout": "vertical",
                   "gap": 8,
+                  "padding": [
+                    6,
+                    0
+                  ],
+                  "justifyContent": "center",
+                  "alignItems": "center",
                   "children": [
                     {
-                      "type": "rectangle",
-                      "id": "w963n",
-                      "name": "Img",
-                      "metadata": {
-                        "type": "unsplash",
-                        "username": "leonsa",
-                        "link": "https://unsplash.com/@leonsa",
-                        "author": "Leonsa"
-                      },
-                      "fill": {
-                        "type": "image",
-                        "enabled": true,
-                        "url": "doggie_002.jpeg",
-                        "mode": "fill"
-                      },
-                      "width": "fill_container",
-                      "height": 120
+                      "type": "icon",
+                      "id": "Ud9Ll",
+                      "name": "Icon",
+                      "width": 18,
+                      "height": 18,
+                      "icon": "share-2",
+                      "library": "lucide",
+                      "fill": "$foreground-muted"
                     },
                     {
-                      "type": "frame",
-                      "id": "ypKjL",
-                      "name": "Info",
-                      "width": "fill_container",
-                      "layout": "vertical",
-                      "gap": 2,
-                      "padding": [
-                        6,
-                        10,
-                        10,
-                        10
-                      ],
-                      "children": [
-                        {
-                          "type": "text",
-                          "id": "H2glW",
-                          "name": "Name",
-                          "fill": "$foreground-primary",
-                          "content": "Mochi",
-                          "fontFamily": "$font-body",
-                          "fontSize": 14,
-                          "fontWeight": "700"
-                        },
-                        {
-                          "type": "text",
-                          "id": "VnzK0",
-                          "name": "Votes",
-                          "fill": "$foreground-muted",
-                          "content": "1,890 votes",
-                          "fontFamily": "$font-caption",
-                          "fontSize": 12,
-                          "fontWeight": "normal"
-                        }
-                      ]
+                      "type": "text",
+                      "id": "IoRgS",
+                      "name": "L",
+                      "fill": "$foreground-muted",
+                      "content": "Share the app",
+                      "fontFamily": "$font-body",
+                      "fontSize": 15,
+                      "fontWeight": "600"
                     }
                   ]
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "id": "UIS6j",
+          "type": "ref",
+          "ref": "b0e7jU",
+          "name": "TabBar",
+          "width": "fill_container"
+        }
+      ]
+    },
+    {
+      "type": "frame",
+      "id": "bODvg",
+      "x": -956,
+      "y": 1543,
+      "name": "TrendingHead",
+      "width": 355,
+      "justifyContent": "space_between",
+      "alignItems": "center",
+      "children": [
+        {
+          "type": "text",
+          "id": "NcuVk",
+          "name": "H",
+          "fill": "$foreground-primary",
+          "content": "All Goofnies",
+          "fontFamily": "$font-body",
+          "fontSize": 17,
+          "fontWeight": "700"
+        }
+      ]
+    },
+    {
+      "type": "frame",
+      "id": "uTaXb",
+      "x": -949,
+      "y": 1613,
+      "name": "TrendingRow",
+      "width": 355,
+      "gap": 12,
+      "children": [
+        {
+          "type": "frame",
+          "id": "CHBUi",
+          "name": "Luna",
+          "clip": true,
+          "width": "fill_container",
+          "fill": "$surface-card",
+          "cornerRadius": "$radius-xl",
+          "layout": "vertical",
+          "gap": 8,
+          "children": [
+            {
+              "type": "rectangle",
+              "id": "EZYlC",
+              "name": "Img",
+              "metadata": {
+                "type": "unsplash",
+                "username": "barcstamaas",
+                "link": "https://unsplash.com/@barcstamaas",
+                "author": "Barcs Tamás"
+              },
+              "fill": {
+                "type": "image",
+                "enabled": true,
+                "url": "kongress-original.png",
+                "mode": "fill"
+              },
+              "width": "fill_container",
+              "height": 120
+            },
+            {
+              "type": "frame",
+              "id": "h9REsM",
+              "name": "Info",
+              "width": "fill_container",
+              "layout": "vertical",
+              "gap": 2,
+              "padding": [
+                6,
+                10,
+                10,
+                10
+              ],
+              "children": [
+                {
+                  "type": "text",
+                  "id": "ca8PB",
+                  "name": "Name",
+                  "rotation": 0.29666489276134006,
+                  "fill": "$foreground-primary",
+                  "content": "Kongress",
+                  "fontFamily": "$font-body",
+                  "fontSize": 14,
+                  "fontWeight": "700"
+                },
+                {
+                  "type": "text",
+                  "id": "JFMVL",
+                  "name": "Votes",
+                  "fill": "$foreground-muted",
+                  "content": "3,481 votes",
+                  "fontFamily": "$font-caption",
+                  "fontSize": 12,
+                  "fontWeight": "normal"
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "type": "frame",
+          "id": "VK9Ll",
+          "name": "Rex",
+          "clip": true,
+          "width": "fill_container",
+          "fill": "$surface-card",
+          "cornerRadius": "$radius-xl",
+          "layout": "vertical",
+          "gap": 8,
+          "children": [
+            {
+              "type": "rectangle",
+              "id": "e74zjN",
+              "name": "Img",
+              "metadata": {
+                "type": "unsplash",
+                "username": "haberdoedas",
+                "link": "https://unsplash.com/@haberdoedas",
+                "author": "Haberdoedas"
+              },
+              "fill": {
+                "type": "image",
+                "enabled": true,
+                "url": "doggie_007.jpeg",
+                "mode": "fill"
+              },
+              "width": "fill_container",
+              "height": 120
+            },
+            {
+              "type": "frame",
+              "id": "BfEJj",
+              "name": "Info",
+              "width": "fill_container",
+              "layout": "vertical",
+              "gap": 2,
+              "padding": [
+                6,
+                10,
+                10,
+                10
+              ],
+              "children": [
+                {
+                  "type": "text",
+                  "id": "nGsGu",
+                  "name": "Name",
+                  "fill": "$foreground-primary",
+                  "content": "Chica",
+                  "fontFamily": "$font-body",
+                  "fontSize": 14,
+                  "fontWeight": "700"
+                },
+                {
+                  "type": "text",
+                  "id": "OjN3F",
+                  "name": "Votes",
+                  "fill": "$foreground-muted",
+                  "content": "2,103 votes",
+                  "fontFamily": "$font-caption",
+                  "fontSize": 12,
+                  "fontWeight": "normal"
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "type": "frame",
+          "id": "ACqQA",
+          "name": "Mochi",
+          "width": "fill_container",
+          "fill": "$surface-card",
+          "cornerRadius": "$radius-xl",
+          "layout": "vertical",
+          "gap": 8,
+          "children": [
+            {
+              "type": "rectangle",
+              "id": "w963n",
+              "name": "Img",
+              "metadata": {
+                "type": "unsplash",
+                "username": "leonsa",
+                "link": "https://unsplash.com/@leonsa",
+                "author": "Leonsa"
+              },
+              "fill": {
+                "type": "image",
+                "enabled": true,
+                "url": "doggie_002.jpeg",
+                "mode": "fill"
+              },
+              "width": "fill_container",
+              "height": 120
+            },
+            {
+              "type": "frame",
+              "id": "ypKjL",
+              "name": "Info",
+              "width": "fill_container",
+              "layout": "vertical",
+              "gap": 2,
+              "padding": [
+                6,
+                10,
+                10,
+                10
+              ],
+              "children": [
+                {
+                  "type": "text",
+                  "id": "H2glW",
+                  "name": "Name",
+                  "fill": "$foreground-primary",
+                  "content": "Mochi",
+                  "fontFamily": "$font-body",
+                  "fontSize": 14,
+                  "fontWeight": "700"
+                },
+                {
+                  "type": "text",
+                  "id": "VnzK0",
+                  "name": "Votes",
+                  "fill": "$foreground-muted",
+                  "content": "1,890 votes",
+                  "fontFamily": "$font-caption",
+                  "fontSize": 12,
+                  "fontWeight": "normal"
                 }
               ]
             }
